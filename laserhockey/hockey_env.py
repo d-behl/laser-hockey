@@ -422,10 +422,8 @@ class HockeyEnv(gym.Env, EzPickle):
         vel = player.linearVelocity
         player.linearVelocity[0] = 0
         force[0] = -vel[0]
-    if (is_player_one and player.position[1] > H - 1.2 and force[1] > 0) \
-        or (not is_player_one and player.position[1] > H - 1.2 and force[1] > 0) \
-        or (is_player_one and player.position[1] < 1.2 and force[1] < 0) \
-        or (not is_player_one and player.position[1] < 1.2 and force[1] < 0): # Do not leave playing area to the top/bottom
+    if (player.position[1] > H - 1.2 and force[1] > 0) \
+        or (player.position[1] < 1.2 and force[1] < 0): # Do not leave playing area to the top/bottom
         vel = player.linearVelocity
         player.linearVelocity[1] = 0
         force[1] = -vel[1]
@@ -446,8 +444,7 @@ class HockeyEnv(gym.Env, EzPickle):
       if is_player_one:
         if player.linearVelocity[0] > 0:
           force[0] = -2 * player.linearVelocity[0] * player.mass / self.timeStep
-        force[0] += -1 * (player.position[0] - CENTER_X) * player.linearVelocity[
-          0] * player.mass / self.timeStep
+        force[0] += -1 * (player.position[0] - CENTER_X) * player.linearVelocity[0] * player.mass / self.timeStep
       else:
         if player.linearVelocity[0] < 0:
           force[0] = -2 * player.linearVelocity[0] * player.mass / self.timeStep
@@ -527,6 +524,18 @@ class HockeyEnv(gym.Env, EzPickle):
         r -= 10
     return r
 
+  # function that computes the reward returned to the agent, here with some reward shaping
+  # the shaping should probably be removed in future versions
+  def get_reward(self, info):
+    r = self._compute_reward()
+    r += info["reward_closeness_to_puck"]
+    return r
+
+  def get_reward_agent_two(self, info_two):
+    r = - self._compute_reward()
+    r += info_two["reward_closeness_to_puck"]
+    return r
+
   def _get_info(self):
     # different proxy rewards:
     # Proxy reward/penalty for not being close to puck in the own half when puck is flying towards goal (not to opponent)
@@ -553,6 +562,32 @@ class HockeyEnv(gym.Env, EzPickle):
             "reward_puck_direction": reward_puck_direction,
             }
 
+  def get_info_agent_two(self):
+    # see get_info for player 1. here everything is just mirrored
+    reward_closeness_to_puck = 0
+    if self.puck.position[0] > CENTER_X and self.puck.linearVelocity[0] >= 0:
+      dist_to_puck = dist_positions(self.player2.position, self.puck.position)
+      max_dist = 250. / SCALE
+      max_reward = -30.  # max (negative) reward through this proxy
+      factor = max_reward / (max_dist * self.max_timesteps / 2)
+      reward_closeness_to_puck += dist_to_puck * factor  # Proxy reward for being close to puck in the own half
+    # Proxy reward: touch puck
+    reward_touch_puck = 0.
+    if self.player2_has_puck == MAX_TIME_KEEP_PUCK:
+      reward_touch_puck = 1.
+
+    # puck is flying in the left direction
+    max_reward = 1.
+    factor = - max_reward / (self.max_timesteps * MAX_PUCK_SPEED)
+    reward_puck_direction = self.puck.linearVelocity[0] * factor  # Puck flies left is good and right not
+
+    return {"winner": - self.winner,
+            "reward_closeness_to_puck": reward_closeness_to_puck,
+            "reward_touch_puck": reward_touch_puck,
+            "reward_puck_direction": reward_puck_direction,
+            }
+
+
   def set_state(self, state):
     """ function to revert the state of the environment to a previous state (observation)"""
     self.player1.position = (state[[0, 1]] + [CENTER_X, CENTER_Y]).tolist()
@@ -578,12 +613,20 @@ class HockeyEnv(gym.Env, EzPickle):
     self.puck.position = player.position
     self.puck.linearVelocity = player.linearVelocity
 
-  def _shoot(self, player):
+  def _shoot(self, player, is_player_one):
     # self.puck.position = player.position
-    self.puck.ApplyForceToCenter(
-      Box2D.b2Vec2(math.cos(player.angle),
-                   math.sin(player.angle)) *
-      self.puck.mass / self.timeStep * SHOOTFORCEMULTIPLIER, True)
+    if is_player_one:
+      self.puck.ApplyForceToCenter(
+        Box2D.b2Vec2(math.cos(player.angle) * 1.0,
+                     math.sin(player.angle) * 1.0) *
+                     self.puck.mass / self.timeStep * SHOOTFORCEMULTIPLIER, True)
+    else:
+      self.puck.ApplyForceToCenter(
+        Box2D.b2Vec2(math.cos(player.angle) * -1.0,
+                     math.sin(player.angle) * -1.0) *
+                     self.puck.mass / self.timeStep * SHOOTFORCEMULTIPLIER, True)
+
+
 
   def discrete_to_continous_action(self, discrete_action):
     ''' converts discrete actions into continuous ones (for each player)
@@ -621,13 +664,13 @@ class HockeyEnv(gym.Env, EzPickle):
         self._keep_puck(self.player1)
         self.player1_has_puck -= 1
         if self.player1_has_puck == 1 or action[3] > 0.5:  # shooting
-          self._shoot(self.player1)
+          self._shoot(self.player1, True)
           self.player1_has_puck = 0
       if self.player2_has_puck > 1:
         self._keep_puck(self.player2)
         self.player2_has_puck -= 1
         if self.player2_has_puck == 1 or action[player2_idx + 3] > 0.5:  # shooting
-          self._shoot(self.player2)
+          self._shoot(self.player2, False)
           self.player2_has_puck = 0
 
     self.world.Step(self.timeStep, 6 * 30, 2 * 30)
@@ -636,13 +679,13 @@ class HockeyEnv(gym.Env, EzPickle):
     if self.time >= self.max_timesteps:
       self.done = True
 
-    reward = self._compute_reward()
     info = self._get_info()
+    reward = self.get_reward(info)
 
     self.closest_to_goal_dist = min(self.closest_to_goal_dist,
                                     dist_positions(self.puck.position, (W, H / 2)))
     self.time += 1
-    return obs, reward + info["reward_closeness_to_puck"], self.done, False, info
+    return obs, reward, self.done, False, info
 
   def render(self, mode='human'):
     if mode is None:
