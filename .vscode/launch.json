@@ -1,0 +1,142 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "train",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "program": "sac/train_agent.py",
+            "args": [
+                "--evaluate", 
+                "--mode", "defense",
+                //"--show",
+                //"--preload_path", "sac/old_models/230802_205834_574483/agents/agent.pkl",
+                "--max_episodes", "5000",
+                "--max_steps", "5000",
+                "--eval_episodes", "30",
+                "--evaluate_every", "1000",
+                "--learning_rate", "1e-3",
+                "--alpha_lr", "0.5",
+                "--lr_factor", "0.5",
+                "--lr_milestones", "1000",
+                "--alpha_milestones", "1000",
+                "--update_target_every", "1",
+                "--gamma", "0.99",
+                "--batch_size", "128",
+                "--grad_steps", "32",
+                "--alpha", "0.2",
+                "--selfplay", "False",
+                "--soft_tau", "0.005",
+                "--per_alpha", "0.6",
+                "--cuda",
+                "--q",
+                "--automatic_entropy_tuning", "True"
+            ],
+        },
+        {
+            "name": "train_phased",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "program": "sac/train_agent.py",
+            "args": [
+                 "--evaluate", 
+                "--mode", "defense",
+                //"--preload_path", "sac/230802_224618_927455/agents/agent.pkl",
+                //"--show",
+                "--max_episodes", "5000",
+                "--max_steps", "5000",
+                "--eval_episodes", "30",
+                "--evaluate_every", "1000",
+                "--learning_rate", "1e-3",
+                "--alpha_lr", "0.5",
+                "--lr_factor", "0.5",
+                "--lr_milestones", "100",
+                "--alpha_milestones", "100",
+                "--update_target_every", "1",
+                "--gamma", "0.95",
+                "--batch_size", "128",
+                "--grad_steps", "32",
+                "--alpha", "0.2",
+                "--selfplay", "False",
+                "--soft_tau", "0.005",
+                "--per_alpha", "0.6",
+                "--cuda",
+                "--q",
+                "--automatic_entropy_tuning", "True",
+                "--phased"
+            ],
+        },
+        {
+            "name": "test",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "program": "sac/evaluate_agent.py",
+            "args": [
+                "--max_steps", "5000",
+                "--eval_episodes", "100",
+                "--filename", "sac/230807_012228_586717/agents/a-5000.pkl",
+                "--mode", "normal",
+                "--show",
+            ],
+        },
+        {
+            "name": "laserenv",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "program": "laserenv.py",
+            "args": [
+                
+            ],
+        },
+      
+    ]
+}
+
+// parser.add_argument('--dry-run', help='Set if running only for sanity check', action='store_true')
+// parser.add_argument('--cuda', help='Set if want to train on graphic card', action='store_true')
+// parser.add_argument('--show', help='Set if want to render training process', action='store_true')
+// parser.add_argument('--q', help='Quiet mode (no prints)', action='store_true')
+// parser.add_argument('--evaluate', help='Set if want to evaluate agent after the training', action='store_true')
+// parser.add_argument('--mode', help='Mode for training currently: (shooting | defense | normal)', default='defense')
+// parser.add_argument('--preload_path', help='Path to the pretrained model', default=None)
+// parser.add_argument('--transitions_path', help='Path to the root of folder containing transitions', default=None)
+
+// # Training params
+// parser.add_argument('--max_episodes', help='Max episodes for training', type=int, default=5000)
+// parser.add_argument('--max_steps', help='Max steps for training', type=int, default=250)
+// parser.add_argument('--eval_episodes', help='Set number of evaluation episodes', type=int, default=30)
+// parser.add_argument('--evaluate_every',
+//                     help='# of episodes between evaluating agent during the training', type=int, default=1000)
+// parser.add_argument('--add_self_every',
+//                     help='# of gradient updates between adding agent (self) to opponent list', type=int, default=100000)
+// parser.add_argument('--learning_rate', help='Learning rate', type=float, default=1e-3)
+// parser.add_argument('--alpha_lr', help='Learning rate', type=float, default=1e-4)
+// parser.add_argument('--lr_factor', help='Scale learning rate by', type=float, default=0.5)
+// parser.add_argument('--lr_milestones', help='Learning rate milestones', nargs='+')
+// parser.add_argument('--alpha_milestones', help='Learning rate milestones', nargs='+')
+// parser.add_argument('--update_target_every', help='# of steps between updating target net', type=int, default=1)
+// parser.add_argument('--gamma', help='Discount', type=float, default=0.95)
+// parser.add_argument('--batch_size', help='batch_size', type=int, default=128)
+// parser.add_argument('--grad_steps', help='grad_steps', type=int, default=32)
+// parser.add_argument(
+//     '--alpha',
+//     type=float,
+//     default=0.2,
+//     help='Temperature parameter alpha determines the relative importance of the entropy term against the reward')
+// parser.add_argument('--automatic_entropy_tuning', type=bool, default=False,
+//                     help='Automatically adjust alpha')
+// parser.add_argument('--selfplay', type=bool, default=False, help='Should agent train selfplaf')
+// parser.add_argument('--soft_tau', help='tau', type=float, default=0.005)
+// parser.add_argument('--per', help='Utilize Prioritized Experience Replay', action='store_true')
+// parser.add_argument('--per_alpha', help='Alpha for PER', type=float, default=0.6)

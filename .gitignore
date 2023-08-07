@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+sac_simp
+sac/old_models
+sac/model
