@@ -4,179 +4,179 @@ import laserhockey.laser_hockey_env as lh
 import gymnasium as gym
 from importlib import reload
 
-# # %%
+# %%
 np.set_printoptions(suppress=True)
 
-# # %% [markdown]
-# # # Normal Game Play
+# %% [markdown]
+# # Normal Game Play
 
-# # %%
-# reload(lh)
+# %%
+reload(lh)
 
-# # %%
-# env = lh.LaserHockeyEnv()
+# %%
+env = lh.LaserHockeyEnv()
 
-# # %% [markdown]
-# # have a look at the initialization condition: alternating who starts and are random in puck position
+# %% [markdown]
+# have a look at the initialization condition: alternating who starts and are random in puck position
 
-# # %%
-# obs, info = env.reset()
-# obs_agent2 = env.obs_agent_two()
-# env.render()
+# %%
+obs, info = env.reset()
+obs_agent2 = env.obs_agent_two()
+env.render()
 
-# # %% [markdown]
-# # one episode with random agents
+# %% [markdown]
+# one episode with random agents
 
-# # %%
-# #obs = env.reset()
-# obs_agent2 = env.obs_agent_two()
+# %%
+#obs = env.reset()
+obs_agent2 = env.obs_agent_two()
 
-# for _ in range(600):
-#     env.render()
-#     a1 = np.random.uniform(-1,1,3)
-#     a2 = np.random.uniform(-1,1,3)    
-#     obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
-#     obs_agent2 = env.obs_agent_two()
-#     if d: break
+for _ in range(600):
+    env.render()
+    a1 = np.random.uniform(-1,1,3)
+    a2 = np.random.uniform(-1,1,3)    
+    obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
+    obs_agent2 = env.obs_agent_two()
+    if d: break
 
-# # %% [markdown]
-# # Without rendering, it runs much faster
+# %% [markdown]
+# Without rendering, it runs much faster
 
-# # %%
-# obs, info  = env.reset()
-# obs_agent2 = env.obs_agent_two()
+# %%
+obs, info  = env.reset()
+obs_agent2 = env.obs_agent_two()
 
-# for _ in range(600):    
-#     a1 = [1,-.5,0] # np.random.uniform(-1,1,3)
-#     a2 = [1,0.,0] # np.random.uniform(-1,1,3)*0    
-#     obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
-#     obs_agent2 = env.obs_agent_two()
-#     if d: break
+for _ in range(600):    
+    a1 = [1,-.5,0] # np.random.uniform(-1,1,3)
+    a2 = [1,0.,0] # np.random.uniform(-1,1,3)*0    
+    obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
+    obs_agent2 = env.obs_agent_two()
+    if d: break
 
-# # %% [markdown]
-# # "info" dict contains useful proxy rewards and winning information
+# %% [markdown]
+# "info" dict contains useful proxy rewards and winning information
 
-# # %%
-# info
+# %%
+info
 
-# # %% [markdown]
-# # Winner == 0: draw
-# # 
-# # Winner == 1: you (left player)
-# # 
-# # Winner == -1: opponent wins (right player)
+# %% [markdown]
+# Winner == 0: draw
+# 
+# Winner == 1: you (left player)
+# 
+# Winner == -1: opponent wins (right player)
 
-# # %% [markdown]
-# # # Train Shooting
+# %% [markdown]
+# # Train Shooting
 
-# # %%
-# env = lh.LaserHockeyEnv(mode=lh.LaserHockeyEnv.TRAIN_SHOOTING)
+# %%
+env = lh.LaserHockeyEnv(mode=lh.LaserHockeyEnv.TRAIN_SHOOTING)
 
-# # %%
-# o, info = env.reset()
-# env.render()
+# %%
+o, info = env.reset()
+env.render()
 
-# # %%
-# for _ in range(200):
-#     env.render()
-#     a1 = [1,0,0] # np.random.uniform(-1,1,3)
-#     a2 = [0,0.,0] 
-#     obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
-#     obs_agent2 = env.obs_agent_two()
-#     if d: break
+# %%
+for _ in range(200):
+    env.render()
+    a1 = [1,0,0] # np.random.uniform(-1,1,3)
+    a2 = [0,0.,0] 
+    obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
+    obs_agent2 = env.obs_agent_two()
+    if d: break
 
-# # %% [markdown]
-# # # Train DEFENDING
+# %% [markdown]
+# # Train DEFENDING
 
-# # %%
-# reload(lh)
+# %%
+reload(lh)
 
-# # %%
-# env = lh.LaserHockeyEnv(mode=lh.LaserHockeyEnv.TRAIN_DEFENSE)
+# %%
+env = lh.LaserHockeyEnv(mode=lh.LaserHockeyEnv.TRAIN_DEFENSE)
 
-# # %%
-# o, info = env.reset()
-# env.render()
+# %%
+o, info = env.reset()
+env.render()
 
-# # %%
-# for _ in range(60):
-#     env.render()
-#     a1 = [1,0,0] # np.random.uniform(-1,1,3)
-#     a2 = [0,0.,0] 
-#     obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
-#     obs_agent2 = env.obs_agent_two()
-#     if d: break
+# %%
+for _ in range(60):
+    env.render()
+    a1 = [1,0,0] # np.random.uniform(-1,1,3)
+    a2 = [0,0.,0] 
+    obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
+    obs_agent2 = env.obs_agent_two()
+    if d: break
 
-# # %% [markdown]
-# # # Using discrete actions
+# %% [markdown]
+# # Using discrete actions
 
-# # %%
-# env = lh.LaserHockeyEnv(mode=lh.LaserHockeyEnv.TRAIN_SHOOTING)
+# %%
+env = lh.LaserHockeyEnv(mode=lh.LaserHockeyEnv.TRAIN_SHOOTING)
 
-# # %%
-# import random
+# %%
+import random
 
-# # %%
-# for _ in range(200):
-#     env.render()
-#     a1_discrete = random.randint(0,7)
-#     a1 = env.discrete_to_continous_action(a1_discrete)
-#     a2 = [0,0.,0] 
-#     obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
-#     obs_agent2 = env.obs_agent_two()
-#     if d: break
+# %%
+for _ in range(200):
+    env.render()
+    a1_discrete = random.randint(0,7)
+    a1 = env.discrete_to_continous_action(a1_discrete)
+    a2 = [0,0.,0] 
+    obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
+    obs_agent2 = env.obs_agent_two()
+    if d: break
 
-# # %%
+# %%
 
 
-# # %% [markdown]
-# # # Hand-crafted Opponent
+# %% [markdown]
+# # Hand-crafted Opponent
 
-# # %%
-# reload(lh)
+# %%
+reload(lh)
 
-# # %%
-# env = lh.LaserHockeyEnv()
+# %%
+env = lh.LaserHockeyEnv()
 
-# # %%
-# o, info = env.reset()
-# env.render()
+# %%
+o, info = env.reset()
+env.render()
 
-# # %%
-# player1 = lh.BasicOpponent()
-# player2 = lh.BasicOpponent()
+# %%
+player1 = lh.BasicOpponent()
+player2 = lh.BasicOpponent()
 
-# # %%
-# obs_buffer = []
+# %%
+obs_buffer = []
 
-# # %%
-# obs, info = env.reset()
-# obs_agent2 = env.obs_agent_two()
-# for _ in range(100):
-#     env.render()
-#     a1 = player1.act(obs)
-#     a2 = player2.act(obs_agent2)
-#     obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
-#     obs_buffer.append(obs)
-#     obs_agent2 = env.obs_agent_two()
-#     if d: break
+# %%
+obs, info = env.reset()
+obs_agent2 = env.obs_agent_two()
+for _ in range(100):
+    env.render()
+    a1 = player1.act(obs)
+    a2 = player2.act(obs_agent2)
+    obs, r, d, _, info = env.step(np.hstack([a1,a2]))    
+    obs_buffer.append(obs)
+    obs_agent2 = env.obs_agent_two()
+    if d: break
 
-# # %%
-# obs_buffer = np.asarray(obs_buffer)
+# %%
+obs_buffer = np.asarray(obs_buffer)
 
-# # %%
-# np.mean(obs_buffer,axis=0)
+# %%
+np.mean(obs_buffer,axis=0)
 
-# # %%
-# np.std(obs_buffer,axis=0)
+# %%
+np.std(obs_buffer,axis=0)
 
-# # %%
-# scaling = [ 1.0,  1.0 , 3.14, 4.0, 4.0, 2.0,  
-#             1.0,  1.0,  3.14, 4.0, 4.0, 2.0,  
-#             2.0, 2.0, 10.0, 10.0]
+# %%
+scaling = [ 1.0,  1.0 , 3.14, 4.0, 4.0, 2.0,  
+            1.0,  1.0,  3.14, 4.0, 4.0, 2.0,  
+            2.0, 2.0, 10.0, 10.0]
 
-# # %%
-# env.close()
+# %%
+env.close()
 
 # %% [markdown]
 # # Human Opponent
@@ -213,6 +213,12 @@ while True:
     if d: break
 
 # %%
+
+
+
+        
+    
+    
 
 
 

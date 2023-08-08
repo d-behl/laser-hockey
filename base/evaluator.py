@@ -31,13 +31,13 @@ def evaluate(agent, env, opponent, eval_episodes, quiet=False, action_mapping=No
                     if agent.args.phased:
                         a2 = agent.act(obs_agent2, phase=[info_dict['reward_puck_direction']], eps=0)
                     else:
-                        a2 = agent.act(obs_agent2, eps=0) #TODO: fix this
+                        a2 = agent.act(obs_agent2, eps=0)
                     a2 = action_mapping[a2]
                 else:
                     if agent.args.phased:
-                        a2 = agent.act(ob, phase=[info_dict['reward_puck_direction']])
+                        a2 = agent.act(obs_agent2, phase=[info_dict['reward_puck_direction']])
                     else:
-                        a2 = agent.act(ob)
+                        a2 = agent.act(obs_agent2)
 
                 if agent.args.mode in ['defense', 'normal']:
                     a1 = opponent.act(ob)
@@ -74,10 +74,8 @@ def evaluate(agent, env, opponent, eval_episodes, quiet=False, action_mapping=No
             obs_agent2 = env.obs_agent_two()
 
             if evaluate_on_opposite_side:
-                # Not really a way to implement this, given the structure of the env...
                 touch_stats[episode_counter] = 0
                 total_reward -= reward
-
             else:
                 if _info['reward_touch_puck'] > 0:
                     touch_stats[episode_counter] = 1

@@ -36,9 +36,24 @@ if __name__ == '__main__':
         raise ValueError('Parameter --filename must be present. See --help.')
 
     env = h_env.HockeyEnv(mode=mode)
-
-    agent = SACAgent.load_model(opts.filename)
+    # obs_dim = env.observation_space.shape
+    # logger = Logger(prefix_path=os.path.join(abs_path, dirname),
+    #             mode=args.mode,
+    #             cleanup=True,
+    #             quiet=args.q)
+    # agent = SACAgent(
+    #     logger=logger,
+    #     obs_dim=obs_dim,
+    #     action_space=env.action_space,
+    #     action_dim=env.num_actions,
+    #     args=args
+    # )
+    agent = SACAgent.load_model_old(None, opts.filename)
+    agent.args.max_steps = opts.max_steps
+    agent.args.q = opts.q
+    agent.args.eval_episodes = opts.eval_episodes
+    agent.args.mode = opts.mode
     agent.eval()
     agent.args.show = opts.show
     opponent = h_env.BasicOpponent(weak=opts.weak)
-    evaluate(agent, env, opponent, opts.eval_episodes, evaluate_on_opposite_side=opts.opposite)
+    stats = evaluate(agent, env, opponent, opts.eval_episodes, evaluate_on_opposite_side=opts.opposite)

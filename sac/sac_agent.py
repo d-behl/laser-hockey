@@ -32,14 +32,17 @@ class SACAgent():
         The variable specifies the args settings.
     """
 
-    def __init__(self, logger, obs_dim, action_space, args):
+    def __init__(self, logger, obs_dim, action_space, args, action_dim):
         self.logger = logger
 
         if args.mode not in ['normal', 'shooting', 'defense']:
             raise ValueError('Unknown training mode. See --help')
+        
 
         self.obs_dim = obs_dim
         self.args = args
+        self.args.buffer_size = int(1e5)
+        self.args.per_beta = 0.4
 
         if self.args.per:
             self.buffer = PrioritizedExperienceReplay(max_size=self.args.buffer_size,
@@ -59,7 +62,7 @@ class SACAgent():
 
         lr_milestones = [int(x) for x in (self.args.lr_milestones[0]).split(' ')]
 
-        self.action_dim = action_space.shape[0]
+        self.action_dim = action_dim
 
         if args.phased:
             self.actor = PMLPActor(
@@ -82,6 +85,7 @@ class SACAgent():
                 hidden_sizes=[256, 256],
                 lr_milestones=lr_milestones,
                 lr_factor=self.args.lr_factor,
+                action_dim = self.action_dim,
                 device=self.args.device
             ).to(self.device)
 
@@ -121,7 +125,8 @@ class SACAgent():
             copy.deepcopy(agent.logger),
             copy.deepcopy(agent.obs_dim),
             copy.deepcopy(agent.action_space),
-            copy.deepcopy(agent.args)
+            copy.deepcopy(agent.args),
+            copy.deepcopy(agent.action_dim)
         )
         clone.critic.load_state_dict(agent.critic.state_dict())
         clone.critic_target.load_state_dict(agent.critic_target.state_dict())
@@ -130,16 +135,19 @@ class SACAgent():
         return clone
     
     @staticmethod
-    def load_model_old(self, fpath):
+    def load_model_old(fpath):
         with open(Path(fpath), 'rb') as inp:
             return pickle.load(inp)
 
-    def load_model(self, fpath):
+    def load_model(self, fpath, keep_args=False):
         agent = SACAgent.load_model_old(fpath)
-        self.actor = agent.actor
-        self.critic = agent.critic
-        self.critic_target = agent.critic_target
-        self.buffer = ExperienceReplay.clone_buffer(agent.buffer, 1000000)
+        self.actor = copy.deepcopy(agent.actor)
+        self.critic = copy.deepcopy(agent.critic)
+        self.critic_target = copy.deepcopy(agent.critic_target)
+        self.buffer =  copy.deepcopy(agent.buffer)
+        if keep_args:
+            self.args = agent.args
+
         
 
     def save_model(self, fpath):
@@ -158,7 +166,6 @@ class SACAgent():
         self.eval_mode = False
 
     def act(self, obs, phase=[0.0]):
-        phase = [0.0]
         if self.args.phased:
             return self._act(obs, phase=phase, evaluate=True) if self.eval_mode else self._act(obs, phase=phase)
         return self._act(obs, evaluate=True) if self.eval_mode else self._act(obs)
@@ -188,7 +195,19 @@ class SACAgent():
     def update_parameters(self, total_step):
         data = self.buffer.sample(self.args.batch_size)
         if self.args.phased:
-            phase = torch.Tensor([0.0]).to(self.args.device)
+            if data.shape[1] == 6:
+                phase = torch.tensor( 
+                    np.stack(data[:, 5]),
+                    device=self.device,
+                    dtype=torch.float
+                )
+            else:
+                # assign phase to 0.0 if not phase provided
+                phase = torch.tensor( 
+                    np.zeros(data.shape[0]),
+                    device=self.device,
+                    dtype=torch.float
+                )
         
         state = torch.tensor(
             np.stack(data[:, 0]),

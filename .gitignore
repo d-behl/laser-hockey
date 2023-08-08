@@ -105,4 +105,5 @@ venv.bak/
 
 sac_simp
 sac/old_models
-sac/model
+sac/models
+RL2023HockeyTournamentClient

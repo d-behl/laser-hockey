@@ -53,6 +53,7 @@ parser.add_argument('--per', help='Utilize Prioritized Experience Replay', actio
 parser.add_argument('--per_alpha', help='Alpha for PER', type=float, default=0.6)
 parser.add_argument('--phased', help='Phased training', action='store_true')
 parser.add_argument('--extra_info', help='Add extra info to observation', action='store_true')
+parser.add_argument('--opposite_side', help='Train agent on opposite side', action='store_true')
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -69,8 +70,8 @@ if __name__ == '__main__':
         raise ValueError('Unknown training mode. See --help')
 
     args.device = torch.device('cuda' if args.cuda and torch.cuda.is_available() else 'cpu')
-
-    dirname = time.strftime(f'models/%y%m%d_%H%M%S_{random.randint(0, 1e6):06}', time.gmtime(time.time()))
+    os.makedirs('models', exist_ok=True)
+    dirname = time.strftime(f'models/%y%m%d_%H%M%S', time.gmtime(time.time()))
     abs_path = os.path.dirname(os.path.realpath(__file__))
     logger = Logger(prefix_path=os.path.join(abs_path, dirname),
                     mode=args.mode,
@@ -99,18 +100,15 @@ if __name__ == '__main__':
         logger=logger,
         obs_dim=obs_dim,
         action_space=env.action_space,
+        action_dim=env.num_actions,
         args=args
     )
     if args.preload_path is not None:
-        agent = SACAgent(
-                logger=logger,
-                obs_dim=obs_dim,
-                action_space=env.action_space,
-                args=args
-            ) 
-        agent.load_model(args.preload_path)
-        agent.buffer.preload_transitions(args.transitions_path)
-        agent.train()
+        #agent.load_model(agent, args.preload_path)
+        agent = SACAgent.load_model_old(args.preload_path)
+        agent.args = args
+        #agent.buffer.preload_transitions(args.transitions_path)
+    agent.train()
 
     trainer = SACTrainer(logger, args=args)
     trainer.train(agent, opponents, env)

@@ -72,63 +72,129 @@ class SACTrainer:
         grad_updates = 0
         new_op_grad = []
         while episode_counter <= self.args.max_episodes:
-            ob, info_dict = env.reset()
-            
-            obs_agent2 = env.obs_agent_two()
-
             total_reward, touched = 0, 0
             touch_stats[episode_counter] = 0
             won_stats[episode_counter] = 0
             lost_stats[episode_counter] = 0
-
-            opponent = poll_opponent(opponents)
-
             first_time_touch = 1
-            for step in range(self.args.max_steps):
-                if self.args.phased:
-                    a1 = agent.act(ob, phase=[info_dict['reward_puck_direction']])
-                else:
-                    a1 = agent.act(ob)
-
-                if self.args.mode == 'defense':
-                    a2 = opponent.act(obs_agent2)
-                elif self.args.mode == 'shooting':
-                    a2 = np.zeros_like(a1)
-                else:
-                    a2 = opponent.act(obs_agent2)
-
-                actions = np.hstack([a1, a2])
-                next_state, reward, done, _, _info = env.step(actions)
-
-                touched = max(touched, _info['reward_touch_puck'])
-
-                step_reward = (
-                    reward
-                    + 5 * _info['reward_closeness_to_puck']
-                    - (1 - touched) * 0.1
-                    + touched * first_time_touch * 0.1 * step
-                )
-                first_time_touch = 1 - touched
-
-                total_reward += step_reward
-
-                agent.store_transition((ob, a1, step_reward, next_state, done))
-
-                if self.args.show:
-                    time.sleep(0.01)
-                    env.render()
-
-                if touched > 0:
-                    touch_stats[episode_counter] = 1
-
-                if done:
-                    won_stats[episode_counter] = 1 if env.winner == 1 else 0
-                    lost_stats[episode_counter] = 1 if env.winner == -1 else 0
-                    break
-
-                ob = next_state
+            if self.args.opposite_side:
+                is_opposite = np.random.choice([True, False], p=[0.5, 0.5])
+            if self.args.opposite_side and is_opposite:
+                ob, info1 = env.reset()
                 obs_agent2 = env.obs_agent_two()
-                total_step_counter += 1
+                info2 = env.get_info_agent_two()
+                phase = [(info2['reward_closeness_to_puck']) % (np.pi*2)]
+                opponent = poll_opponent(opponents)
+                for step in range(self.args.max_steps):
+                #while True:
+                    if self.args.phased:
+                        a2 = agent.act(obs_agent2, phase=phase)
+                    else:
+                        a2 = agent.act(obs_agent2)
+
+                    if self.args.mode == 'defense':
+                        a1 = opponent.act(ob)
+                    elif self.args.mode == 'shooting':
+                        a1 = np.zeros_like(a2)
+                    else:
+                        a1 = opponent.act(ob)
+
+                    actions = np.hstack([a1, a2])
+                    next_state, _, d, t, info1 = env.step(actions)
+                    done = d
+                    info2 = env.get_info_agent_two()
+                    reward = env.get_reward_agent_two(info2)
+                    next_state2 = env.obs_agent_two()
+                    
+                    touched = max(touched, info2['reward_touch_puck'])
+
+                    step_reward = (
+                        reward
+                        #+ info2['reward_closeness_to_puck']
+                        #- (1 - touched) * 0.1
+                        #+ touched * first_time_touch * 0.1
+                    )
+                    first_time_touch = 1 - touched
+
+                    total_reward += step_reward
+                    if self.args.phased:
+                        agent.store_transition((obs_agent2, a2, step_reward, next_state2, done, phase))
+                    else:
+                        agent.store_transition((obs_agent2, a2, step_reward, next_state2, done))
+
+                    if self.args.show:
+                        env.render()
+
+                    if touched > 0:
+                        touch_stats[episode_counter] = 1
+
+                    if d or t:
+                        lost_stats[episode_counter] = 1 if env.winner == 1 else 0
+                        won_stats[episode_counter] = 1 if env.winner == -1 else 0
+                        break
+
+                    if self.args.phased:
+                         phase = [(info2['reward_closeness_to_puck']) % (np.pi*2)]
+                    ob = next_state
+                    obs_agent2 = next_state2
+                    total_step_counter += 1 
+            else:
+                ob, info1 = env.reset()
+                obs_agent2 = env.obs_agent_two()
+
+                opponent = poll_opponent(opponents)
+                phase = [(info1['reward_closeness_to_puck']) % (np.pi*2)] # [-1,0] [0,2pi]
+                for step in range(self.args.max_steps):
+                #while True:
+                    if self.args.phased:
+                        a1 = agent.act(ob, phase=phase)
+                    else:
+                        a1 = agent.act(ob)
+
+                    if self.args.mode == 'defense':
+                        a2 = opponent.act(obs_agent2)
+                    elif self.args.mode == 'shooting':
+                        a2 = np.zeros_like(a1)
+                    else:
+                        a2 = opponent.act(obs_agent2)
+
+
+                    actions = np.hstack([a1, a2])
+                    next_state, reward, d, t, info1 = env.step(actions)
+                    done = d
+                    
+                    touched = max(touched, info1['reward_touch_puck'])
+
+                    step_reward = (
+                        reward
+                        #+ 5 * info1['reward_closeness_to_puck']
+                        #- (1 - touched) * 0.1
+                        #+ touched * first_time_touch * 0.1
+                    )
+                    first_time_touch = 1 - touched
+
+                    total_reward += step_reward
+                    if self.args.phased:
+                        agent.store_transition((ob, a1, step_reward, next_state, done, phase))
+                    else:
+                        agent.store_transition((ob, a1, step_reward, next_state, done))
+
+                    if self.args.show:
+                        env.render()
+
+                    if touched > 0:
+                        touch_stats[episode_counter] = 1
+
+                    if d or t:
+                        won_stats[episode_counter] = 1 if env.winner == 1 else 0
+                        lost_stats[episode_counter] = 1 if env.winner == -1 else 0
+                        break
+
+                    if self.args.phased:
+                        phase = [(info1['reward_closeness_to_puck']) % (np.pi*2)]
+                    ob = next_state
+                    obs_agent2 = env.obs_agent_two()
+                    total_step_counter += 1
 
             if agent.buffer.size < self.args.batch_size:
                 continue
@@ -164,6 +230,7 @@ class SACTrainer:
                         env,
                         ev_opponent,
                         100,
+                        evaluate_on_opposite_side=self.args.opposite_side,
                         quiet=True
                     )
                     eval_stats[eval_op]['reward'].append(rew)
@@ -191,14 +258,16 @@ class SACTrainer:
         self.plot_status(rew_stats, eval_stats, q1_losses, q2_losses, actor_losses, alpha_losses, new_op_grad)
 
         # Save agent
-        self.logger.save_model(agent, 'agent.pkl')
-        self.logger.save_args(self.args)
-
+        self.save_agent(agent)
+        
         if self.args.evaluate:
             agent.eval()
             agent.args.show = True
             evaluate(agent, env, h_env.BasicOpponent(weak=False), self.args.eval_episodes)
 
-
+    def save_agent(self, agent):   
+        self.logger.save_model(agent, 'agent.pkl')
+        self.logger.save_args(self.args)
+        agent.save_model(self.logger.prefix_path)
 
     
