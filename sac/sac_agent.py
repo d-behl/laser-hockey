@@ -8,13 +8,14 @@ from pathlib import Path
 import pickle
 
 from base.agent import Agent
-from models import *
+from models import ActorNetwork, CriticNetwork
 from pmlp_actor import PMLPActor
 from pmlp_critic import PMLPCritic
 from utils import hard_update, soft_update
 from base.experience_replay import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 class SACAgent():
     """
@@ -89,24 +90,57 @@ class SACAgent():
                 device=self.args.device
             ).to(self.device)
 
-        self.critic = CriticNetwork(
-            input_dim=obs_dim,
-            n_actions=self.action_dim,
-            learning_rate=self.args.learning_rate,
-            hidden_sizes=[256, 256],
-            lr_milestones=lr_milestones,
-            lr_factor=self.args.lr_factor,
-            device=self.args.device
-        ).to(self.device)
+        if args.phased:
+            self.critic = PMLPCritic(
+                input_size_state=obs_dim[0],
+                input_size_action=self.action_dim,
+                output_size=64,
+                learning_rate=self.args.learning_rate,
+                device=self.args.device,
+                lr_milestones=lr_milestones,
+                hidden_sizes=[256, 256],
+                dtype=torch.float,
+                n_layers=2,
+                batch_size=self.args.batch_size,
+                scale=1.0,
+                lr_factor=self.args.lr_factor,
+                loss='l2',
+            )
 
-        self.critic_target = CriticNetwork(
-            input_dim=obs_dim,
-            n_actions=self.action_dim,
-            learning_rate=self.args.learning_rate,
-            hidden_sizes=[256, 256],
-            lr_milestones=lr_milestones,
-            device=self.args.device
-        ).to(self.device)
+            self.critic_target = PMLPCritic(
+                input_size_state=obs_dim[0],
+                input_size_action=self.action_dim,
+                output_size=64,
+                learning_rate=self.args.learning_rate,
+                device=self.args.device,
+                lr_milestones=lr_milestones,
+                hidden_sizes=[256, 256],
+                dtype=torch.float,
+                n_layers=2,
+                batch_size=self.args.batch_size,
+                scale=1.0,
+                lr_factor=self.args.lr_factor,
+                loss='l2',
+            )
+        else:
+            self.critic = CriticNetwork(
+                input_dim=obs_dim,
+                n_actions=self.action_dim,
+                learning_rate=self.args.learning_rate,
+                hidden_sizes=[256, 256],
+                lr_milestones=lr_milestones,
+                lr_factor=self.args.lr_factor,
+                device=self.args.device
+            ).to(self.device)
+
+            self.critic_target = CriticNetwork(
+                input_dim=obs_dim,
+                n_actions=self.action_dim,
+                learning_rate=self.args.learning_rate,
+                hidden_sizes=[256, 256],
+                lr_milestones=lr_milestones,
+                device=self.args.device
+            ).to(self.device)
 
         hard_update(self.critic_target, self.critic)
 
@@ -148,8 +182,6 @@ class SACAgent():
         if keep_args:
             self.args = agent.args
 
-        
-
     def save_model(self, fpath):
         Path(fpath).mkdir(parents=True, exist_ok=True)
         torch.save(self.actor, Path(fpath) / 'actor.pt')
@@ -157,6 +189,8 @@ class SACAgent():
         torch.save(self.critic_target, Path(fpath) / 'critic_target.pt')
         
     def store_transition(self, transition):
+        if len(transition)>6:
+            NotImplementedError('Does not accept extra data dimensions')
         self.buffer.add_transition(transition)
 
     def eval(self):
@@ -165,17 +199,15 @@ class SACAgent():
     def train(self):
         self.eval_mode = False
 
-    def act(self, obs, phase=[0.0]):
+    def act(self, obs, phase=None):
         if self.args.phased:
             return self._act(obs, phase=phase, evaluate=True) if self.eval_mode else self._act(obs, phase=phase)
         return self._act(obs, evaluate=True) if self.eval_mode else self._act(obs)
 
-    def _act(self, obs, evaluate=False, phase=[0.0]):
+    def _act(self, obs, evaluate=False, phase=None):
         # if isinstance(obs, tuple):
         #     obs = obs[0]
         state = torch.Tensor(obs).to(self.args.device).unsqueeze(0)
-        if self.args.phased:
-            phase = torch.tensor(phase, dtype=float).to(self.args.device)
         if evaluate is False:
             if self.args.phased:
                 action, _, _, _ = self.actor.sample(state, phase=phase)
@@ -195,16 +227,9 @@ class SACAgent():
     def update_parameters(self, total_step):
         data = self.buffer.sample(self.args.batch_size)
         if self.args.phased:
-            if data.shape[1] == 6:
+            if data.shape[1] > 5:
                 phase = torch.tensor( 
                     np.stack(data[:, 5]),
-                    device=self.device,
-                    dtype=torch.float
-                )
-            else:
-                # assign phase to 0.0 if not phase provided
-                phase = torch.tensor( 
-                    np.zeros(data.shape[0]),
                     device=self.device,
                     dtype=torch.float
                 )
@@ -234,7 +259,7 @@ class SACAgent():
         ).squeeze(dim=1)
 
         not_done = torch.tensor(
-            (~np.stack(data[:, 4])[:, None]).astype(np.int),
+            (~np.stack(data[:, 4])[:, None]).astype(int),
             device=self.device,
             dtype=torch.float
         ).squeeze(dim=1)
@@ -242,14 +267,18 @@ class SACAgent():
         with torch.no_grad():
             if self.args.phased:
                 next_state_action, next_state_log_pi, _, _ = self.actor.sample(next_state, phase=phase)
+                q1_next_targ, q2_next_targ = self.critic_target(next_state, next_state_action, phase=phase)
+                
             else:
                 next_state_action, next_state_log_pi, _, _ = self.actor.sample(next_state)
-            q1_next_targ, q2_next_targ = self.critic_target(next_state, next_state_action)
-
+                q1_next_targ, q2_next_targ = self.critic_target(next_state, next_state_action)
+            
             min_qf_next_target = torch.min(q1_next_targ, q2_next_targ) - self.alpha * next_state_log_pi
             next_q_value = reward + not_done * self.args.gamma * (min_qf_next_target).squeeze()
-
-        qf1, qf2 = self.critic(state, action)
+        if self.args.phased:
+            qf1, qf2 = self.critic(state, action, phase=phase)
+        else:
+            qf1, qf2 = self.critic(state, action)
 
         qf1_loss = self.critic.loss(qf1.squeeze(), next_q_value)
         qf2_loss = self.critic.loss(qf2.squeeze(), next_q_value)
@@ -263,8 +292,10 @@ class SACAgent():
             pi, log_pi, _, _ = self.actor.sample(state, phase=phase)
         else:
             pi, log_pi, _, _ = self.actor.sample(state)
-
-        qf1_pi, qf2_pi = self.critic(state, pi)
+        if self.args.phased:
+            qf1_pi, qf2_pi = self.critic(state, pi, phase=phase)
+        else:
+            qf1_pi, qf2_pi = self.critic(state, pi)
         min_qf_pi = torch.min(qf1_pi, qf2_pi)
 
         policy_loss = ((self.alpha * log_pi) - min_qf_pi).mean(axis=0)
@@ -275,7 +306,6 @@ class SACAgent():
 
         if self.automatic_entropy_tuning:
             alpha_loss = -(self.log_alpha * (log_pi + self.target_entropy).detach()).mean()
-
             self.alpha_optim.zero_grad()
             alpha_loss.backward()
             self.alpha_optim.step()
@@ -289,3 +319,6 @@ class SACAgent():
             soft_update(self.critic_target, self.critic, self.args.soft_tau)
 
         return (qf1_loss.item(), qf2_loss.item(), policy_loss.item(), alpha_loss.item())
+    
+
+

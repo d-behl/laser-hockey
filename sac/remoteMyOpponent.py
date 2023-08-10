@@ -32,9 +32,9 @@ def load_model(filename):
 
 class RemoteMyOpponent(RemoteControllerInterface):
 
-    def __init__(self, filename, identifier='What the Puck?:Automatisch Neuer'):
+    def __init__(self, filename, identifier='SAC'):
         RemoteControllerInterface.__init__(self, identifier=identifier)
-        self.q_agent = SACAgent.load_model_old(None, filename)
+        self.q_agent = SACAgent.load_model_old(filename)
         self.q_agent.eval()
         
 
@@ -46,15 +46,15 @@ class RemoteMyOpponent(RemoteControllerInterface):
         return np.asarray(a1)
     
 if __name__ == '__main__':
-    filename = '/home/bozcomlekci/Desktop/ML/RL/laser-hockey/sac/models/230808_142054/agents/a-18000.pkl'
+    filename = 'sac/models/230808_213414/agents/a-3000.pkl'
 
     controller = RemoteMyOpponent(filename)
 
     # Play n (None for an infinite amount) games and quit
-    client = Client(username='What the Puck?:Automatisch Neuer', # Testuser
+    client = Client(username='What the Puck?:', # Testuser
                     password='waeVae4ohd',
                     controller=controller, 
                     output_path='/home/bozcomlekci/Desktop/ML/RL/laser-hockey/RL2023HockeyTournamentClient/serverside', # rollout buffer with finished games will be saved in here
                     interactive=False,
                     op='start_queuing',
-                    num_games=100)
+                    num_games=1)

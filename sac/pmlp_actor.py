@@ -56,11 +56,6 @@ class PMLPActor(nn.Module):
         self.h2o_list = []
         self.phase_list = []
 
-        self.optimizer = torch.optim.Adam(self.parameters(), lr=args.learning_rate)
-        self.lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(
-            self.optimizer, milestones=args.lr_milestones, gamma=args.lr_factor
-        )
-
         self.loss = nn.MSELoss().to(args.device)
 
         if self.action_space is not None:
@@ -98,7 +93,10 @@ class PMLPActor(nn.Module):
                 dummy_loss = dummy_criterion(dummy_o, dummy_y)
                 dummy_loss.backward()
 
-        
+        self.optimizer = torch.optim.Adam(self.parameters(), lr=args.learning_rate)
+        self.lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(
+            self.optimizer, milestones=args.lr_milestones, gamma=args.lr_factor
+        )
 
     def initialize(self):
         init_fanin(self.l_00.weight)
@@ -150,9 +148,10 @@ class PMLPActor(nn.Module):
         else:
             o = w0_o*self.control_h2o_list[0](h_0) + w1_o*self.control_h2o_list[1](h_0) + w2_o*self.control_h2o_list[2](h_0) + w3_o*self.control_h2o_list[3](h_0)
         
-        prob = o
-        mu = self.mu(prob)
-        log_sigma = self.log_sigma(prob)
+        o = F.relu(o)
+        
+        mu = self.mu(o)
+        log_sigma = self.log_sigma(o)
         log_sigma = torch.clamp(log_sigma, min=-20, max=10)
 
         return mu, log_sigma

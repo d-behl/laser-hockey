@@ -13,15 +13,15 @@
             "program": "sac/train_agent.py",
             "args": [
                 "--evaluate", 
-                "--mode", "normal",
+                "--mode", "defense",
                 //"--show",
-                "--preload_path", "sac/models/230808_142054/agents/a-18000.pkl",
-                "--max_episodes", "25000",
+                "--preload_path", "sac/models/230809_185813/agents/a-1000.pkl",
+                "--max_episodes", "40000",
                 "--max_steps", "100000",
                 "--eval_episodes", "30",
                 "--evaluate_every", "1000",
                 "--learning_rate", "1e-3",
-                "--alpha_lr", "1e-4",
+                "--alpha_lr", "1e-3",
                 "--lr_factor", "0.5",
                 "--lr_milestones", "5000",
                 "--alpha_milestones", "5000",
@@ -36,8 +36,9 @@
                 "--per",
                 "--cuda",
                 "--q",
-                "--opposite_side",
-                "--automatic_entropy_tuning", "True"
+                //"--opposite_side",
+                "--automatic_entropy_tuning", "True",
+                //"--noise"
             ],
         },
         {
@@ -49,21 +50,21 @@
             "program": "sac/train_agent.py",
             "args": [
                 "--evaluate", 
-                "--mode", "normal",
-                //"--preload_path", "sac/models/230808_112054/agents/agent.pkl",
+                "--mode", "defense",
+                //"--preload_path", "sac/models/230808_113042/agents/agent.pkl",
                 //"--show",
                 "--max_episodes", "25000",
                 "--max_steps", "100000",
                 "--eval_episodes", "30",
                 "--evaluate_every", "1000",
-                "--learning_rate", "1e-2",
-                "--alpha_lr", "1e-4",
+                "--learning_rate", "1e-3",
+                "--alpha_lr", "1e-3",
                 "--lr_factor", "0.5",
                 "--lr_milestones", "5000",
                 "--alpha_milestones", "5000",
                 "--update_target_every", "1",
                 "--gamma", "0.95",
-                "--batch_size", "128",
+                "--batch_size", "1",
                 "--grad_steps", "32",
                 "--alpha", "0.2",
                 "--per",
@@ -73,8 +74,8 @@
                 "--cuda",
                 "--q",
                 "--automatic_entropy_tuning", "True",
-                "--opposite_side",
-                "--phased"
+                //"--opposite_side",
+                "--phased", "state"
             ],
         },
         {
@@ -87,10 +88,10 @@
             "args": [
                 "--max_steps", "5000",
                 "--eval_episodes", "100",
-                "--filename", "sac/models/230808_142054/agents/a-18000.pkl",
+                "--filename", "sac/models/230809_190139/agents/a-1000.pkl",
                 "--mode", "normal",
+                //"--weak",
                 //"--opposite",
-                "--weak",
                 "--show",
             ],
         },
@@ -120,41 +121,3 @@
       
     ]
 }
-
-// parser.add_argument('--dry-run', help='Set if running only for sanity check', action='store_true')
-// parser.add_argument('--cuda', help='Set if want to train on graphic card', action='store_true')
-// parser.add_argument('--show', help='Set if want to render training process', action='store_true')
-// parser.add_argument('--q', help='Quiet mode (no prints)', action='store_true')
-// parser.add_argument('--evaluate', help='Set if want to evaluate agent after the training', action='store_true')
-// parser.add_argument('--mode', help='Mode for training currently: (shooting | defense | normal)', default='defense')
-// parser.add_argument('--preload_path', help='Path to the pretrained model', default=None)
-// parser.add_argument('--transitions_path', help='Path to the root of folder containing transitions', default=None)
-
-// # Training params
-// parser.add_argument('--max_episodes', help='Max episodes for training', type=int, default=5000)
-// parser.add_argument('--max_steps', help='Max steps for training', type=int, default=250)
-// parser.add_argument('--eval_episodes', help='Set number of evaluation episodes', type=int, default=30)
-// parser.add_argument('--evaluate_every',
-//                     help='# of episodes between evaluating agent during the training', type=int, default=1000)
-// parser.add_argument('--add_self_every',
-//                     help='# of gradient updates between adding agent (self) to opponent list', type=int, default=100000)
-// parser.add_argument('--learning_rate', help='Learning rate', type=float, default=1e-3)
-// parser.add_argument('--alpha_lr', help='Learning rate', type=float, default=1e-4)
-// parser.add_argument('--lr_factor', help='Scale learning rate by', type=float, default=0.5)
-// parser.add_argument('--lr_milestones', help='Learning rate milestones', nargs='+')
-// parser.add_argument('--alpha_milestones', help='Learning rate milestones', nargs='+')
-// parser.add_argument('--update_target_every', help='# of steps between updating target net', type=int, default=1)
-// parser.add_argument('--gamma', help='Discount', type=float, default=0.95)
-// parser.add_argument('--batch_size', help='batch_size', type=int, default=128)
-// parser.add_argument('--grad_steps', help='grad_steps', type=int, default=32)
-// parser.add_argument(
-//     '--alpha',
-//     type=float,
-//     default=0.2,
-//     help='Temperature parameter alpha determines the relative importance of the entropy term against the reward')
-// parser.add_argument('--automatic_entropy_tuning', type=bool, default=False,
-//                     help='Automatically adjust alpha')
-// parser.add_argument('--selfplay', type=bool, default=False, help='Should agent train selfplaf')
-// parser.add_argument('--soft_tau', help='tau', type=float, default=0.005)
-// parser.add_argument('--per', help='Utilize Prioritized Experience Replay', action='store_true')
-// parser.add_argument('--per_alpha', help='Alpha for PER', type=float, default=0.6)

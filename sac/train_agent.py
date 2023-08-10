@@ -51,9 +51,10 @@ parser.add_argument('--selfplay', type=bool, default=False, help='Should agent t
 parser.add_argument('--soft_tau', help='tau', type=float, default=0.005)
 parser.add_argument('--per', help='Utilize Prioritized Experience Replay', action='store_true')
 parser.add_argument('--per_alpha', help='Alpha for PER', type=float, default=0.6)
-parser.add_argument('--phased', help='Phased training', action='store_true')
+parser.add_argument('--phased', help='Phased training', type=str, default=None)
 parser.add_argument('--extra_info', help='Add extra info to observation', action='store_true')
 parser.add_argument('--opposite_side', help='Train agent on opposite side', action='store_true')
+parser.add_argument('--noise', help='Add noise to observation', action='store_true')
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -81,6 +82,7 @@ if __name__ == '__main__':
     env = h_env.HockeyEnv(mode=mode, verbose=(not args.q))
     opponents = [
         h_env.BasicOpponent(weak=True),
+        h_env.BasicOpponent(weak=False)
     ]
 
     # Add absolute paths for pretrained agents

@@ -48,7 +48,7 @@ if __name__ == '__main__':
     #     action_dim=env.num_actions,
     #     args=args
     # )
-    agent = SACAgent.load_model_old(None, opts.filename)
+    agent = SACAgent.load_model_old( opts.filename)
     agent.args.max_steps = opts.max_steps
     agent.args.q = opts.q
     agent.args.eval_episodes = opts.eval_episodes
@@ -56,4 +56,5 @@ if __name__ == '__main__':
     agent.eval()
     agent.args.show = opts.show
     opponent = h_env.BasicOpponent(weak=opts.weak)
-    stats = evaluate(agent, env, opponent, opts.eval_episodes, evaluate_on_opposite_side=opts.opposite)
+    stats = evaluate(agent, env, opponent, opts.eval_episodes)
+    print(stats)

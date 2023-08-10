@@ -40,6 +40,7 @@ def compute_multipliers(w,p):
         elif n == 3:
             weight = 0.5*(w3 - w2)
         for j in range(len(ind)):
+            #list_of_w[ind[j,0]][j,0] = weight[j,0]
             list_of_w[ind[j]][j] = weight[j]
 
     return list_of_w[0], list_of_w[1], list_of_w[2], list_of_w[3]
@@ -85,6 +86,73 @@ def compute_reward_closeness_to_puck(transition):
         reward_closeness_to_puck += dist_to_puck * factor  # Proxy reward for being close to puck in the own half
 
     return reward_closeness_to_puck
+
+# 0  x pos player one
+# 1  y pos player one
+# 2  angle player one
+# 3  x vel player one
+# 4  y vel player one
+# 5  angular vel player one
+# 6  x player two
+# 7  y player two
+# 8  angle player two
+# 9 y vel player two
+# 10 y vel player two
+# 11 angular vel player two
+# 12 x pos puck
+# 13 y pos puck
+# 14 x vel puck
+# 15 y vel puck
+# Keep Puck Mode
+# 16 time left player has puck
+# 17 time left other player has puck
+
+def calculate_phase(obs=None, env=None, info=None, player=1):
+    center_x = CENTER_X
+
+    x_vel_puck = obs[14]
+    
+
+    if player == 1 or  player == 2:
+        puck_pos_x = obs[12]
+        # puck_x_position in [0,2pi]
+        if puck_pos_x < -center_x:
+            print(puck_pos_x)
+            puck_pos_x = -center_x
+        if puck_pos_x > center_x:
+            print(puck_pos_x)
+            puck_pos_x = center_x
+        assert puck_pos_x >= -center_x and puck_pos_x <= center_x, f'puck_pos_x: {puck_pos_x} not in range'
+        phase = [puck_pos_x / center_x * np.pi + np.pi] 
+
+        # if puck_pos_x >= center_x and x_vel_puck <= 0:
+        #      phase += [0]
+        # elif puck_pos_x <= center_x and x_vel_puck <= 0:
+        #      phase += [np.pi/2]
+        # elif puck_pos_x <= center_x and x_vel_puck >= 0:
+        #      phase += np.pi
+        # elif puck_pos_x >= center_x and x_vel_puck >= 0:
+        #      phase += 3*np.pi/2
+        # else:
+        #      raise ValueError('Unknown config')
+    # elif player == 2:
+    #     puck_pos = obs[6:8]
+    #     if puck_pos[0] <= center_x and x_vel_puck >= 0:
+    #         phase = [0] + puck_pos[0]
+    #     elif puck_pos[0] >= center_x and x_vel_puck >= 0:
+    #         phase = [np.pi/2] + puck_pos[0]
+    #     elif puck_pos[0] >= center_x and x_vel_puck <= 0:
+    #         phase = [np.pi] + puck_pos[0]
+    #     elif puck_pos[0] <= center_x and x_vel_puck <= 0:
+    #         phase = [3*np.pi/2] + puck_pos[0]
+    #     else:
+    #         raise ValueError('Unknown config')
+    else: 
+        raise ValueError('Unknown player')
+
+    # phase = [(info['reward_puck_direction']) % (np.pi*2)]
+
+    return torch.tensor(phase, dtype=torch.float32)
 
 
 def compute_winning_reward(transition, is_player_one):
