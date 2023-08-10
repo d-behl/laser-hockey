@@ -7,6 +7,7 @@ import sys
 from trainer import SACTrainer
 import time
 import random
+import json 
 
 sys.path.insert(0, '.')
 sys.path.insert(1, '..')
@@ -78,6 +79,9 @@ if __name__ == '__main__':
                     mode=args.mode,
                     cleanup=True,
                     quiet=args.q)
+    
+    with open(os.path.join(abs_path, dirname, 'args.json'), 'w') as f:
+        json.dump(str(args), f, indent=4)
 
     env = h_env.HockeyEnv(mode=mode, verbose=(not args.q))
     opponents = [

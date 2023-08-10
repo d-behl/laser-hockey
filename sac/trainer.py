@@ -110,9 +110,10 @@ class SACTrainer:
                     info2 = env.get_info_agent_two()
                     reward = env.get_reward_agent_two(info2)
                     next_state2 = env.obs_agent_two()
+                    if self.args.phased:
+                        next_phase = calculate_phase(obs=next_state2, env=env, info=info2, player=2)
                     
                     touched = max(touched, info2['reward_touch_puck'])
-                    
                     step_reward = (
                         reward
                         + info2['reward_puck_direction']
@@ -124,7 +125,7 @@ class SACTrainer:
 
                     total_reward += step_reward
                     if self.args.phased:
-                        agent.store_transition((obs_agent2, a2, step_reward, next_state2, done, phase))
+                        agent.store_transition((obs_agent2, a2, step_reward, next_state2, done, phase, next_phase))
                     else:
                         agent.store_transition((obs_agent2, a2, step_reward, next_state2, done))
 
@@ -142,8 +143,7 @@ class SACTrainer:
                     
                     ob = next_state
                     obs_agent2 = next_state2
-                    if self.args.phased:
-                         phase = calculate_phase(obs=obs_agent2, env=env, info=info2, player=2)
+                    phase = next_phase
                     total_step_counter += 1 
             else:
                 ob, info1 = env.reset()
@@ -171,6 +171,8 @@ class SACTrainer:
 
                     actions = np.hstack([a1, a2])
                     next_state, reward, d, t, info1 = env.step(actions)
+                    if self.args.phased:
+                        next_phase = calculate_phase(obs=next_state, env=env, info=info1, player=1)
                     done = d
                     
                     touched = max(touched, info1['reward_touch_puck'])
@@ -186,7 +188,7 @@ class SACTrainer:
 
                     total_reward += step_reward
                     if self.args.phased:
-                        agent.store_transition((ob, a1, step_reward, next_state, done, phase))
+                        agent.store_transition((ob, a1, step_reward, next_state, done, phase, next_phase))
                     else:
                         agent.store_transition((ob, a1, step_reward, next_state, done))
 
@@ -204,8 +206,7 @@ class SACTrainer:
 
                     ob = next_state
                     obs_agent2 = env.obs_agent_two()
-                    if self.args.phased:
-                        phase = calculate_phase(obs=ob, env=env, info=info1, player=1)
+                    phase = next_phase
                     total_step_counter += 1
 
             if agent.buffer.size < self.args.batch_size:

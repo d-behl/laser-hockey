@@ -48,7 +48,7 @@ if __name__ == '__main__':
     #     action_dim=env.num_actions,
     #     args=args
     # )
-    agent = SACAgent.load_model_old( opts.filename)
+    agent = SACAgent.load_model_old(opts.filename)
     agent.args.max_steps = opts.max_steps
     agent.args.q = opts.q
     agent.args.eval_episodes = opts.eval_episodes

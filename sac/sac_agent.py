@@ -227,9 +227,14 @@ class SACAgent():
     def update_parameters(self, total_step):
         data = self.buffer.sample(self.args.batch_size)
         if self.args.phased:
-            if data.shape[1] > 5:
+            if data.shape[1] > 6:
                 phase = torch.tensor( 
                     np.stack(data[:, 5]),
+                    device=self.device,
+                    dtype=torch.float
+                )
+                next_phase = torch.tensor(
+                    np.stack(data[:, 6]),
                     device=self.device,
                     dtype=torch.float
                 )
@@ -266,9 +271,8 @@ class SACAgent():
 
         with torch.no_grad():
             if self.args.phased:
-                next_state_action, next_state_log_pi, _, _ = self.actor.sample(next_state, phase=phase)
-                q1_next_targ, q2_next_targ = self.critic_target(next_state, next_state_action, phase=phase)
-                
+                next_state_action, next_state_log_pi, _, _ = self.actor.sample(next_state, phase=next_phase)
+                q1_next_targ, q2_next_targ = self.critic_target(next_state, next_state_action, phase=next_phase)
             else:
                 next_state_action, next_state_log_pi, _, _ = self.actor.sample(next_state)
                 q1_next_targ, q2_next_targ = self.critic_target(next_state, next_state_action)

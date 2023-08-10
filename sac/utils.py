@@ -40,7 +40,7 @@ def compute_multipliers(w,p):
         elif n == 3:
             weight = 0.5*(w3 - w2)
         for j in range(len(ind)):
-            #list_of_w[ind[j,0]][j,0] = weight[j,0]
+            #list_of_w[ind[j]][j] = weight[j,0]
             list_of_w[ind[j]][j] = weight[j]
 
     return list_of_w[0], list_of_w[1], list_of_w[2], list_of_w[3]
@@ -152,6 +152,7 @@ def calculate_phase(obs=None, env=None, info=None, player=1):
 
     # phase = [(info['reward_puck_direction']) % (np.pi*2)]
 
+    #return torch.tensor([np.pi], dtype=torch.float32)
     return torch.tensor(phase, dtype=torch.float32)
 
 

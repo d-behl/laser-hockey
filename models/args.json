@@ -1,0 +1,38 @@
+{
+  "dry_run": false,
+  "cuda": true,
+  "show": false,
+  "q": true,
+  "evaluate": true,
+  "mode": "normal",
+  "preload_path": null,
+  "transitions_path": null,
+  "max_episodes": 25000,
+  "max_steps": 100000,
+  "eval_episodes": 30,
+  "evaluate_every": 1000,
+  "add_self_every": 100000,
+  "learning_rate": 0.001,
+  "alpha_lr": 0.001,
+  "lr_factor": 0.5,
+  "lr_milestones": [
+    "5000"
+  ],
+  "alpha_milestones": [
+    "5000"
+  ],
+  "update_target_every": 1,
+  "gamma": 0.95,
+  "batch_size": 128,
+  "grad_steps": 32,
+  "alpha": 0.0,
+  "automatic_entropy_tuning": true,
+  "selfplay": false,
+  "soft_tau": 0.005,
+  "per": false,
+  "per_alpha": 0.6,
+  "phased": "state",
+  "extra_info": false,
+  "opposite_side": false,
+  "noise": false,
+  "device": 

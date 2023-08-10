@@ -16,6 +16,7 @@ class PMLPCritic(nn.Module):
 
         self.input_size_state = input_size_state
         self.input_size_action = input_size_action
+        self.input_size = input_size_state + input_size_action
         self.output_size = output_size
         self.hidden_size_1 = hidden_sizes[0]
         self.hidden_size_2 = hidden_sizes[-1]
@@ -42,21 +43,29 @@ class PMLPCritic(nn.Module):
         self.control_hidden_list = []
         self.control_h2o_list = []
 
-        self.l_00 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        #self.l_00 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        self.l_00 = nn.Linear(self.input_size, self.hidden_size_1)
         self.h2o_0 = nn.Linear(self.hidden_size_2, self.output_size)
-        self.l_10 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        #self.l_10 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        self.l_10 = nn.Linear(self.input_size, self.hidden_size_1)
         self.h2o_1 = nn.Linear(self.hidden_size_2, self.output_size)
-        self.l_20 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        #self.l_20 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        self.l_20 = nn.Linear(self.input_size, self.hidden_size_1)
         self.h2o_2 = nn.Linear(self.hidden_size_2, self.output_size)
-        self.l_30 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        #self.l_30 = nn.Linear(self.input_size_state, self.hidden_size_1)
+        self.l_30 = nn.Linear(self.input_size, self.hidden_size_1)
         self.h2o_3 = nn.Linear(self.hidden_size_2, self.output_size)
         
 
         if self.n_layers == 2:
-            self.l_01 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
-            self.l_11 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
-            self.l_21 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
-            self.l_31 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
+            #self.l_01 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
+            #self.l_11 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
+            #self.l_21 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
+            #self.l_31 = nn.Linear(self.hidden_size_1+input_size_action, self.hidden_size_2).type(dtype)
+            self.l_01 = nn.Linear(self.hidden_size_1, self.hidden_size_2).type(dtype)
+            self.l_11 = nn.Linear(self.hidden_size_1, self.hidden_size_2).type(dtype)
+            self.l_21 = nn.Linear(self.hidden_size_1, self.hidden_size_2).type(dtype)
+            self.l_31 = nn.Linear(self.hidden_size_1, self.hidden_size_2).type(dtype)
 
 
         self.initialize()
@@ -100,13 +109,15 @@ class PMLPCritic(nn.Module):
 
     def forward(self,state, action, phase):
         x = torch.cat([state, action], 1)
-        x_s = x[:,0:self.input_size_state]
-        x_a = x[:,self.input_size_state:]
+        #x_s = x[:,0:self.input_size_state]
+        #x_a = x[:,self.input_size_state:]
         control_hidden_list = self.control_hidden_list
         control_h2o_list = self.control_h2o_list
 
+        # Modulate by the phase
         w = spline_w(phase)
         w0,w1,w2,w3 = compute_multipliers(w,phase)
+
         w0_h1 = Variable(w0.repeat(1,self.hidden_size_1).type(self.dtype))
         w1_h1 = Variable(w1.repeat(1,self.hidden_size_1).type(self.dtype))
         w2_h1 = Variable(w2.repeat(1,self.hidden_size_1).type(self.dtype))
@@ -122,13 +133,15 @@ class PMLPCritic(nn.Module):
         w1_o = Variable(w1.repeat(1,self.output_size).type(self.dtype))
         w2_o = Variable(w2.repeat(1,self.output_size).type(self.dtype))
         w3_o = Variable(w3.repeat(1,self.output_size).type(self.dtype))
+
         
-        h_0 = F.relu(w0_h1*control_hidden_list[0][0](x_s) + w1_h1*control_hidden_list[0][1](x_s) + w2_h1*control_hidden_list[0][2](x_s) + w3_h1*control_hidden_list[0][3](x_s))
+        # Forward pass through the MLP
+        h_0 = F.relu(w0_h1*control_hidden_list[0][0](x) + w1_h1*control_hidden_list[0][1](x) + w2_h1*control_hidden_list[0][2](x) + w3_h1*control_hidden_list[0][3](x))
         if self.n_layers == 2:
-            h_1 = F.relu(w0_h2*control_hidden_list[1][0](torch.cat((h_0,x_a),1)) + w1_h2*control_hidden_list[1][1](torch.cat((h_0,x_a),1)) + w2_h2*control_hidden_list[1][2](torch.cat((h_0,x_a),1)) + w3_h2*control_hidden_list[1][3](torch.cat((h_0,x_a),1)))
+            #h_1 = F.relu(w0_h2*control_hidden_list[1][0](torch.cat((h_0,x_a),1)) + w1_h2*control_hidden_list[1][1](torch.cat((h_0,x_a),1)) + w2_h2*control_hidden_list[1][2](torch.cat((h_0,x_a),1)) + w3_h2*control_hidden_list[1][3](torch.cat((h_0,x_a),1)))
+            h_1 = F.relu(w0_h2*control_hidden_list[1][0](h_0) + w1_h2*control_hidden_list[1][1](h_0) + w2_h2*control_hidden_list[1][2](h_0) + w3_h2*control_hidden_list[1][3](h_0))
             o = w0_o*control_h2o_list[0](h_1) + w1_o*control_h2o_list[1](h_1) + w2_o*control_h2o_list[2](h_1) + w3_o*control_h2o_list[3](h_1)
         else:
-            # Modulate by the phase
             o = w0_o*control_h2o_list[0](h_0) + w1_o*control_h2o_list[1](h_0) + w2_o*control_h2o_list[2](h_0) + w3_o*control_h2o_list[3](h_0)
         x1 = self.q1_layer(o)
         x2 = self.q2_layer(o)
