@@ -2,7 +2,7 @@
 
 An implementation of the laserhockey environment agents by:
 
-**DQN:** Agniv Sharma 
+**DQN:** Agniv Sharma
 
 **SAC:** Batuhan Ozcomlekci
 
@@ -24,6 +24,7 @@ or add the following line to your Pipfile
 
 ``laserhockey = {editable = true, git = "https://git@github.com/martius-lab/laser-hockey-env.git"}``
 
+Checkpoint files can be found in the drive `https://drive.google.com/drive/folders/1zDMBWRs9vSFvKmyMMCFNzA-KhtNL4zVh?usp=drive_link`
 
 ## HockeyEnv
 
