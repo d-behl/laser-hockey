@@ -108,3 +108,4 @@ sac/old_models
 sac/models
 RL2023HockeyTournamentClient
 .idea
+sac/test.py

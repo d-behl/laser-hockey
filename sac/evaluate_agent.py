@@ -47,7 +47,7 @@ if __name__ == '__main__':
     agent.args.show = opts.show
     opponents = []
     opponent_name = 'sac/old_models/230808_142054/agents/a-18000.pkl'
-    #opponent = h_env.BasicOpponent(weak=opts.weak)
-    opponent = SACAgent.load_model_old(opponent_name) # 
+    opponent = h_env.BasicOpponent(weak=opts.weak)
+    #opponent = SACAgent.load_model_old(opponent_name) # 
     stats = evaluate(agent, env, opponent, opts.eval_episodes)
     print(stats)

@@ -16,7 +16,7 @@ from base.evaluator import evaluate
 parser = ArgumentParser()
 
 # Training params
-parser.add_argument('--eval_episodes', help='Set number of evaluation episodes', type=int, default=10)
+parser.add_argument('--eval_episodes', help='Set number of evaluation episodes', type=int, default=100)
 parser.add_argument('--max_steps', help='Set number of steps in an eval episode', type=int, default=10000)
 parser.add_argument('--filename', help='Path to the pretrained model', default=None)
 parser.add_argument('--mode', help='Mode for evaluation', default='normal')
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     agent_name = 'Phased SAC'
     
     episodes_dict = {}
-    for episodes in range(1000, 21000, 1000):
+    for episodes in range(1000, 26000, 1000):
         agent_num = f'a-{episodes}'
         agent_filename = f'{agents_folder}/agents/{agent_num}.pkl'
         agent = SACAgent.load_model_old(agent_filename)

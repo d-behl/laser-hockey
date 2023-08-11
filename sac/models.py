@@ -1,3 +1,5 @@
+# The default models' code here is adapted from https://github.com/anticdimi/laser-hockey.git
+
 import sys
 
 sys.path.insert(0, '.')

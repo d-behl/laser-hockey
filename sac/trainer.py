@@ -101,12 +101,13 @@ class SACTrainer:
                     # if self.args.noise: 
                     #     a2 += noise.sample()
 
-                    if self.args.mode == 'defense':
-                        a1 = opponent.act(ob)
-                    elif self.args.mode == 'shooting':
+                    if self.args.mode == 'shooting':
                         a1 = np.zeros_like(a2)
                     else:
-                        a1 = opponent.act(ob)
+                        if self.args.only_self and self.args.phased:
+                            a1 = agent.act(ob, phase=phase)
+                        else:
+                            a1 = opponent.act(ob)
 
                     actions = np.hstack([a1, a2])
                     next_state, _, d, t, info1 = env.step(actions)
@@ -164,7 +165,10 @@ class SACTrainer:
                     elif self.args.mode == 'shooting':
                         a2 = np.zeros_like(a1)
                     else:
-                        a2 = opponent.act(obs_agent2)
+                        if self.args.only_self and self.args.phased:
+                            a2 = opponent.act(obs_agent2, phase=phase2)
+                        else:
+                            a2 = opponent.act(obs_agent2)
 
                     actions = np.hstack([a1, a2])
                     next_state, reward, d, t, info1 = env.step(actions)

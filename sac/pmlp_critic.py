@@ -1,3 +1,6 @@
+# The skeleton of the code here is adapted from https://github.com/sharma-arjun/phase-ddpg
+# Actor and Critic networks are changed to run in SAC setting.
+
 import math
 import torch
 import numpy as np

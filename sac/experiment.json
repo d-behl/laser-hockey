@@ -2,31 +2,31 @@
     "1000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": -6.0175407211798415,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.2,
-                "Loss Percentage": 0.3,
-                "Draw Percentage": 0.5
+                "Reward per Game": -4.331370651989687,
+                "Touch per Game": 0.88,
+                "Won Percentage": 0.31,
+                "Loss Percentage": 0.39,
+                "Draw Percentage": 0.29999999999999993
             },
             "episodes": 1000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": -2.914485657233276,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.2,
+                "Reward per Game": -1.538144188889124,
+                "Touch per Game": 0.96,
+                "Won Percentage": 0.37,
                 "Loss Percentage": 0.3,
-                "Draw Percentage": 0.5
+                "Draw Percentage": 0.33
             },
             "episodes": 1000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -7.531255097281958,
-                "Touch per Game": 0.6,
-                "Won Percentage": 0.2,
-                "Loss Percentage": 0.8,
-                "Draw Percentage": 0.0
+                "Reward per Game": -4.175214586444049,
+                "Touch per Game": 0.65,
+                "Won Percentage": 0.36,
+                "Loss Percentage": 0.61,
+                "Draw Percentage": 0.030000000000000027
             },
             "episodes": 1000
         }
@@ -34,31 +34,31 @@
     "2000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": -3.024734419483521,
-                "Touch per Game": 0.8,
-                "Won Percentage": 0.3,
-                "Loss Percentage": 0.3,
-                "Draw Percentage": 0.39999999999999997
+                "Reward per Game": -0.43776980994515424,
+                "Touch per Game": 0.94,
+                "Won Percentage": 0.41,
+                "Loss Percentage": 0.23,
+                "Draw Percentage": 0.3600000000000001
             },
             "episodes": 2000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 6.9537839289168035,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.19999999999999996
+                "Reward per Game": -0.7263496074073149,
+                "Touch per Game": 0.93,
+                "Won Percentage": 0.42,
+                "Loss Percentage": 0.33,
+                "Draw Percentage": 0.25000000000000006
             },
             "episodes": 2000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -5.618542516923246,
-                "Touch per Game": 0.6,
-                "Won Percentage": 0.3,
-                "Loss Percentage": 0.7,
-                "Draw Percentage": 0.0
+                "Reward per Game": -3.178928684930164,
+                "Touch per Game": 0.59,
+                "Won Percentage": 0.39,
+                "Loss Percentage": 0.59,
+                "Draw Percentage": 0.020000000000000018
             },
             "episodes": 2000
         }
@@ -66,31 +66,31 @@
     "3000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 6.599986895884068,
-                "Touch per Game": 0.8,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.19999999999999996
+                "Reward per Game": 0.9333731740101022,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.49,
+                "Loss Percentage": 0.19,
+                "Draw Percentage": 0.32
             },
             "episodes": 3000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 2.6810730039964144,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.6,
-                "Loss Percentage": 0.2,
-                "Draw Percentage": 0.2
+                "Reward per Game": 4.0501581934376,
+                "Touch per Game": 0.97,
+                "Won Percentage": 0.63,
+                "Loss Percentage": 0.11,
+                "Draw Percentage": 0.26
             },
             "episodes": 3000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -9.026849410807365,
-                "Touch per Game": 0.6,
-                "Won Percentage": 0.1,
-                "Loss Percentage": 0.8,
-                "Draw Percentage": 0.09999999999999998
+                "Reward per Game": -4.443896424082615,
+                "Touch per Game": 0.53,
+                "Won Percentage": 0.33,
+                "Loss Percentage": 0.65,
+                "Draw Percentage": 0.019999999999999907
             },
             "episodes": 3000
         }
@@ -98,31 +98,31 @@
     "4000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.3798264492903645,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.7,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.30000000000000004
+                "Reward per Game": 0.9657794376061999,
+                "Touch per Game": 0.91,
+                "Won Percentage": 0.47,
+                "Loss Percentage": 0.2,
+                "Draw Percentage": 0.33
             },
             "episodes": 4000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 5.1144777890264255,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.7,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.20000000000000004
+                "Reward per Game": 3.0268362898642454,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.61,
+                "Loss Percentage": 0.19,
+                "Draw Percentage": 0.2
             },
             "episodes": 4000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -0.8260835849756099,
+                "Reward per Game": -3.839078550179654,
                 "Touch per Game": 0.5,
-                "Won Percentage": 0.5,
-                "Loss Percentage": 0.5,
-                "Draw Percentage": 0.0
+                "Won Percentage": 0.36,
+                "Loss Percentage": 0.63,
+                "Draw Percentage": 0.010000000000000009
             },
             "episodes": 4000
         }
@@ -130,31 +130,31 @@
     "5000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.074060686955037,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.7,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.30000000000000004
+                "Reward per Game": 2.862449289305693,
+                "Touch per Game": 0.93,
+                "Won Percentage": 0.65,
+                "Loss Percentage": 0.16,
+                "Draw Percentage": 0.18999999999999997
             },
             "episodes": 5000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 6.357710157452112,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.09999999999999995
+                "Reward per Game": 4.2942650143536705,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.68,
+                "Loss Percentage": 0.15,
+                "Draw Percentage": 0.16999999999999996
             },
             "episodes": 5000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -0.8200287152496847,
-                "Touch per Game": 0.5,
+                "Reward per Game": -0.806883629635884,
+                "Touch per Game": 0.52,
                 "Won Percentage": 0.5,
-                "Loss Percentage": 0.5,
-                "Draw Percentage": 0.0
+                "Loss Percentage": 0.48,
+                "Draw Percentage": 0.020000000000000018
             },
             "episodes": 5000
         }
@@ -162,31 +162,31 @@
     "6000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.135867138180538,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.09999999999999995
+                "Reward per Game": 3.0284431106641274,
+                "Touch per Game": 0.97,
+                "Won Percentage": 0.68,
+                "Loss Percentage": 0.19,
+                "Draw Percentage": 0.12999999999999995
             },
             "episodes": 6000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.523663565393894,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.9,
+                "Reward per Game": 5.121518232930811,
+                "Touch per Game": 0.93,
+                "Won Percentage": 0.71,
                 "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Draw Percentage": 0.19000000000000003
             },
             "episodes": 6000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -2.9704648595652445,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.4,
-                "Loss Percentage": 0.6,
-                "Draw Percentage": 0.0
+                "Reward per Game": -0.9174930077922689,
+                "Touch per Game": 0.57,
+                "Won Percentage": 0.5,
+                "Loss Percentage": 0.49,
+                "Draw Percentage": 0.010000000000000009
             },
             "episodes": 6000
         }
@@ -194,30 +194,30 @@
     "7000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.093605586533103,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
+                "Reward per Game": 4.276625700671887,
+                "Touch per Game": 0.91,
+                "Won Percentage": 0.74,
                 "Loss Percentage": 0.2,
-                "Draw Percentage": -5.551115123125783e-17
+                "Draw Percentage": 0.06
             },
             "episodes": 7000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 9.50494973358433,
-                "Touch per Game": 1.0,
-                "Won Percentage": 1.0,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.0
+                "Reward per Game": 7.356188304294688,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.86,
+                "Loss Percentage": 0.05,
+                "Draw Percentage": 0.09000000000000001
             },
             "episodes": 7000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -2.9774784289475456,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.4,
-                "Loss Percentage": 0.6,
+                "Reward per Game": -1.447228786924552,
+                "Touch per Game": 0.58,
+                "Won Percentage": 0.48,
+                "Loss Percentage": 0.52,
                 "Draw Percentage": 0.0
             },
             "episodes": 7000
@@ -226,31 +226,31 @@
     "8000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.212387376855842,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.2,
-                "Draw Percentage": -5.551115123125783e-17
+                "Reward per Game": 5.350675110105329,
+                "Touch per Game": 0.92,
+                "Won Percentage": 0.79,
+                "Loss Percentage": 0.14,
+                "Draw Percentage": 0.06999999999999995
             },
             "episodes": 8000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.1572703861969815,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.19999999999999996
+                "Reward per Game": 6.943712160933825,
+                "Touch per Game": 0.99,
+                "Won Percentage": 0.85,
+                "Loss Percentage": 0.07,
+                "Draw Percentage": 0.08000000000000002
             },
             "episodes": 8000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -5.802408322461594,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.3,
-                "Loss Percentage": 0.7,
-                "Draw Percentage": 0.0
+                "Reward per Game": -2.135289986584296,
+                "Touch per Game": 0.52,
+                "Won Percentage": 0.44,
+                "Loss Percentage": 0.53,
+                "Draw Percentage": 0.030000000000000027
             },
             "episodes": 8000
         }
@@ -258,31 +258,31 @@
     "9000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 3.8419149791445006,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.7,
-                "Loss Percentage": 0.2,
-                "Draw Percentage": 0.10000000000000003
+                "Reward per Game": 7.854624795168496,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.93,
+                "Loss Percentage": 0.05,
+                "Draw Percentage": 0.01999999999999995
             },
             "episodes": 9000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 9.262811227363896,
-                "Touch per Game": 1.0,
-                "Won Percentage": 1.0,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.0
+                "Reward per Game": 7.099389912773389,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.87,
+                "Loss Percentage": 0.1,
+                "Draw Percentage": 0.03
             },
             "episodes": 9000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -1.0635389257058112,
-                "Touch per Game": 0.6,
-                "Won Percentage": 0.5,
-                "Loss Percentage": 0.5,
-                "Draw Percentage": 0.0
+                "Reward per Game": -2.4692311550949473,
+                "Touch per Game": 0.51,
+                "Won Percentage": 0.42,
+                "Loss Percentage": 0.57,
+                "Draw Percentage": 0.01000000000000012
             },
             "episodes": 9000
         }
@@ -290,31 +290,31 @@
     "10000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 7.862193570650267,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.09999999999999998
+                "Reward per Game": 5.543595492293792,
+                "Touch per Game": 0.89,
+                "Won Percentage": 0.82,
+                "Loss Percentage": 0.15,
+                "Draw Percentage": 0.030000000000000054
             },
             "episodes": 10000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.229677895313079,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 7.7853146203865515,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.91,
+                "Loss Percentage": 0.06,
+                "Draw Percentage": 0.02999999999999997
             },
             "episodes": 10000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -7.593573742333088,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.2,
-                "Loss Percentage": 0.8,
-                "Draw Percentage": 0.0
+                "Reward per Game": -2.551026382842489,
+                "Touch per Game": 0.53,
+                "Won Percentage": 0.42,
+                "Loss Percentage": 0.57,
+                "Draw Percentage": 0.01000000000000012
             },
             "episodes": 10000
         }
@@ -322,31 +322,31 @@
     "11000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 9.175658306297347,
-                "Touch per Game": 1.0,
-                "Won Percentage": 1.0,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.0
+                "Reward per Game": 5.553561161711433,
+                "Touch per Game": 0.92,
+                "Won Percentage": 0.81,
+                "Loss Percentage": 0.15,
+                "Draw Percentage": 0.03999999999999995
             },
             "episodes": 11000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 9.41296839112334,
-                "Touch per Game": 1.0,
-                "Won Percentage": 1.0,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.0
+                "Reward per Game": 7.032749286968105,
+                "Touch per Game": 0.92,
+                "Won Percentage": 0.88,
+                "Loss Percentage": 0.04,
+                "Draw Percentage": 0.07999999999999999
             },
             "episodes": 11000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -4.325596142503973,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.4,
-                "Loss Percentage": 0.5,
-                "Draw Percentage": 0.09999999999999998
+                "Reward per Game": -3.340523945263393,
+                "Touch per Game": 0.51,
+                "Won Percentage": 0.38,
+                "Loss Percentage": 0.58,
+                "Draw Percentage": 0.040000000000000036
             },
             "episodes": 11000
         }
@@ -354,30 +354,30 @@
     "12000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.709731181942851,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.09999999999999995
+                "Reward per Game": 6.127886860214156,
+                "Touch per Game": 0.92,
+                "Won Percentage": 0.84,
+                "Loss Percentage": 0.13,
+                "Draw Percentage": 0.030000000000000027
             },
             "episodes": 12000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 5.959195327279633,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.09999999999999995
+                "Reward per Game": 8.22690775569085,
+                "Touch per Game": 0.99,
+                "Won Percentage": 0.94,
+                "Loss Percentage": 0.05,
+                "Draw Percentage": 0.01000000000000005
             },
             "episodes": 12000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -9.791411502220186,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.1,
-                "Loss Percentage": 0.9,
+                "Reward per Game": -7.26825213429904,
+                "Touch per Game": 0.51,
+                "Won Percentage": 0.2,
+                "Loss Percentage": 0.8,
                 "Draw Percentage": 0.0
             },
             "episodes": 12000
@@ -386,31 +386,31 @@
     "13000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 5.841052421715527,
-                "Touch per Game": 0.8,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.09999999999999995
+                "Reward per Game": 6.420472390495343,
+                "Touch per Game": 0.93,
+                "Won Percentage": 0.87,
+                "Loss Percentage": 0.12,
+                "Draw Percentage": 0.010000000000000009
             },
             "episodes": 13000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 8.424346269663435,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.09999999999999998
+                "Reward per Game": 7.6323787287191855,
+                "Touch per Game": 0.94,
+                "Won Percentage": 0.91,
+                "Loss Percentage": 0.08,
+                "Draw Percentage": 0.009999999999999967
             },
             "episodes": 13000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -5.111774003524497,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.3,
-                "Loss Percentage": 0.7,
-                "Draw Percentage": 0.0
+                "Reward per Game": -4.566699235581767,
+                "Touch per Game": 0.51,
+                "Won Percentage": 0.33,
+                "Loss Percentage": 0.66,
+                "Draw Percentage": 0.009999999999999898
             },
             "episodes": 13000
         }
@@ -418,31 +418,31 @@
     "14000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 4.0333866215022125,
-                "Touch per Game": 0.8,
-                "Won Percentage": 0.7,
-                "Loss Percentage": 0.2,
-                "Draw Percentage": 0.10000000000000003
+                "Reward per Game": 5.729514361976478,
+                "Touch per Game": 0.96,
+                "Won Percentage": 0.83,
+                "Loss Percentage": 0.12,
+                "Draw Percentage": 0.050000000000000044
             },
             "episodes": 14000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.1597292697168715,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 8.111956431372594,
+                "Touch per Game": 0.97,
+                "Won Percentage": 0.91,
+                "Loss Percentage": 0.03,
+                "Draw Percentage": 0.05999999999999997
             },
             "episodes": 14000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -7.33326446819037,
+                "Reward per Game": -7.71425652275631,
                 "Touch per Game": 0.5,
-                "Won Percentage": 0.2,
-                "Loss Percentage": 0.8,
-                "Draw Percentage": 0.0
+                "Won Percentage": 0.18,
+                "Loss Percentage": 0.82,
+                "Draw Percentage": 1.1102230246251565e-16
             },
             "episodes": 14000
         }
@@ -450,31 +450,31 @@
     "15000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 8.911797379107515,
-                "Touch per Game": 1.0,
-                "Won Percentage": 1.0,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.0
+                "Reward per Game": 5.773939009560312,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.84,
+                "Loss Percentage": 0.15,
+                "Draw Percentage": 0.010000000000000037
             },
             "episodes": 15000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.379636014888791,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 7.8793770085877055,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.92,
+                "Loss Percentage": 0.07,
+                "Draw Percentage": 0.009999999999999953
             },
             "episodes": 15000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -5.3760335591046,
-                "Touch per Game": 0.7,
-                "Won Percentage": 0.3,
-                "Loss Percentage": 0.7,
-                "Draw Percentage": 0.0
+                "Reward per Game": -4.691376534040373,
+                "Touch per Game": 0.57,
+                "Won Percentage": 0.34,
+                "Loss Percentage": 0.63,
+                "Draw Percentage": 0.029999999999999916
             },
             "episodes": 15000
         }
@@ -482,31 +482,31 @@
     "16000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 4.3110156487344735,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.2,
-                "Draw Percentage": -5.551115123125783e-17
+                "Reward per Game": 6.934869413501804,
+                "Touch per Game": 0.94,
+                "Won Percentage": 0.89,
+                "Loss Percentage": 0.1,
+                "Draw Percentage": 0.009999999999999981
             },
             "episodes": 16000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 8.887687168908393,
-                "Touch per Game": 1.0,
-                "Won Percentage": 1.0,
-                "Loss Percentage": 0.0,
-                "Draw Percentage": 0.0
+                "Reward per Game": 6.662860640899729,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.84,
+                "Loss Percentage": 0.09,
+                "Draw Percentage": 0.07000000000000003
             },
             "episodes": 16000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -2.867012811429993,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.4,
-                "Loss Percentage": 0.6,
-                "Draw Percentage": 0.0
+                "Reward per Game": -3.785671070748174,
+                "Touch per Game": 0.52,
+                "Won Percentage": 0.36,
+                "Loss Percentage": 0.62,
+                "Draw Percentage": 0.020000000000000018
             },
             "episodes": 16000
         }
@@ -514,31 +514,31 @@
     "17000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 7.081342329000253,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 5.9349185819356585,
+                "Touch per Game": 0.91,
+                "Won Percentage": 0.83,
+                "Loss Percentage": 0.16,
+                "Draw Percentage": 0.010000000000000037
             },
             "episodes": 17000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.484585649329432,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 8.412150222101832,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.94,
+                "Loss Percentage": 0.04,
+                "Draw Percentage": 0.020000000000000052
             },
             "episodes": 17000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -2.97568401478935,
-                "Touch per Game": 0.6,
-                "Won Percentage": 0.4,
-                "Loss Percentage": 0.6,
-                "Draw Percentage": 0.0
+                "Reward per Game": -6.410863805199492,
+                "Touch per Game": 0.52,
+                "Won Percentage": 0.24,
+                "Loss Percentage": 0.74,
+                "Draw Percentage": 0.020000000000000018
             },
             "episodes": 17000
         }
@@ -546,31 +546,31 @@
     "18000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 4.73795329436614,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.7,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": 0.20000000000000004
+                "Reward per Game": 6.149428346423365,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.84,
+                "Loss Percentage": 0.12,
+                "Draw Percentage": 0.040000000000000036
             },
             "episodes": 18000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.359300907547221,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 8.502826291013909,
+                "Touch per Game": 0.97,
+                "Won Percentage": 0.95,
+                "Loss Percentage": 0.04,
+                "Draw Percentage": 0.010000000000000044
             },
             "episodes": 18000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -2.8665301674980426,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.4,
-                "Loss Percentage": 0.6,
-                "Draw Percentage": 0.0
+                "Reward per Game": -4.633605813458196,
+                "Touch per Game": 0.58,
+                "Won Percentage": 0.32,
+                "Loss Percentage": 0.67,
+                "Draw Percentage": 0.009999999999999898
             },
             "episodes": 18000
         }
@@ -578,31 +578,31 @@
     "19000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 4.949228616420376,
-                "Touch per Game": 1.0,
-                "Won Percentage": 0.8,
-                "Loss Percentage": 0.2,
-                "Draw Percentage": -5.551115123125783e-17
+                "Reward per Game": 5.3676820206843425,
+                "Touch per Game": 0.98,
+                "Won Percentage": 0.81,
+                "Loss Percentage": 0.15,
+                "Draw Percentage": 0.03999999999999995
             },
             "episodes": 19000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.409530527933637,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.9,
+                "Reward per Game": 7.049625807328742,
+                "Touch per Game": 0.94,
+                "Won Percentage": 0.87,
                 "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Draw Percentage": 0.03
             },
             "episodes": 19000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -5.241636228439742,
-                "Touch per Game": 0.5,
-                "Won Percentage": 0.3,
-                "Loss Percentage": 0.7,
-                "Draw Percentage": 0.0
+                "Reward per Game": -4.362758949005347,
+                "Touch per Game": 0.53,
+                "Won Percentage": 0.32,
+                "Loss Percentage": 0.65,
+                "Draw Percentage": 0.029999999999999916
             },
             "episodes": 19000
         }
@@ -610,33 +610,193 @@
     "20000": {
         "Strong Opponent": {
             "Strong Opponent": {
-                "Reward per Game": 7.065672880352331,
-                "Touch per Game": 0.9,
-                "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Reward per Game": 5.446056636856944,
+                "Touch per Game": 0.96,
+                "Won Percentage": 0.84,
+                "Loss Percentage": 0.14,
+                "Draw Percentage": 0.020000000000000018
             },
             "episodes": 20000
         },
         "Weak Opponent": {
             "Weak Opponent": {
-                "Reward per Game": 7.2838282835886705,
-                "Touch per Game": 0.8,
+                "Reward per Game": 7.693918409653097,
+                "Touch per Game": 0.94,
                 "Won Percentage": 0.9,
-                "Loss Percentage": 0.1,
-                "Draw Percentage": -2.7755575615628914e-17
+                "Loss Percentage": 0.07,
+                "Draw Percentage": 0.02999999999999997
             },
             "episodes": 20000
         },
         "Best Performing SAC": {
             "Best Performing SAC": {
-                "Reward per Game": -7.543850379048332,
-                "Touch per Game": 0.6,
-                "Won Percentage": 0.2,
-                "Loss Percentage": 0.8,
-                "Draw Percentage": 0.0
+                "Reward per Game": -4.910331156856351,
+                "Touch per Game": 0.61,
+                "Won Percentage": 0.31,
+                "Loss Percentage": 0.65,
+                "Draw Percentage": 0.039999999999999925
             },
             "episodes": 20000
+        }
+    },
+    "21000": {
+        "Strong Opponent": {
+            "Strong Opponent": {
+                "Reward per Game": 6.108761894199179,
+                "Touch per Game": 0.93,
+                "Won Percentage": 0.85,
+                "Loss Percentage": 0.14,
+                "Draw Percentage": 0.010000000000000009
+            },
+            "episodes": 21000
+        },
+        "Weak Opponent": {
+            "Weak Opponent": {
+                "Reward per Game": 9.09270909123612,
+                "Touch per Game": 0.99,
+                "Won Percentage": 0.96,
+                "Loss Percentage": 0.01,
+                "Draw Percentage": 0.030000000000000034
+            },
+            "episodes": 21000
+        },
+        "Best Performing SAC": {
+            "Best Performing SAC": {
+                "Reward per Game": -3.406169477146379,
+                "Touch per Game": 0.57,
+                "Won Percentage": 0.33,
+                "Loss Percentage": 0.55,
+                "Draw Percentage": 0.11999999999999988
+            },
+            "episodes": 21000
+        }
+    },
+    "22000": {
+        "Strong Opponent": {
+            "Strong Opponent": {
+                "Reward per Game": 6.404905814771005,
+                "Touch per Game": 0.97,
+                "Won Percentage": 0.85,
+                "Loss Percentage": 0.09,
+                "Draw Percentage": 0.060000000000000026
+            },
+            "episodes": 22000
+        },
+        "Weak Opponent": {
+            "Weak Opponent": {
+                "Reward per Game": 7.863052411006683,
+                "Touch per Game": 0.96,
+                "Won Percentage": 0.91,
+                "Loss Percentage": 0.07,
+                "Draw Percentage": 0.019999999999999962
+            },
+            "episodes": 22000
+        },
+        "Best Performing SAC": {
+            "Best Performing SAC": {
+                "Reward per Game": -4.8430303175404585,
+                "Touch per Game": 0.55,
+                "Won Percentage": 0.32,
+                "Loss Percentage": 0.66,
+                "Draw Percentage": 0.019999999999999907
+            },
+            "episodes": 22000
+        }
+    },
+    "23000": {
+        "Strong Opponent": {
+            "Strong Opponent": {
+                "Reward per Game": 7.48303854645217,
+                "Touch per Game": 0.96,
+                "Won Percentage": 0.9,
+                "Loss Percentage": 0.09,
+                "Draw Percentage": 0.009999999999999981
+            },
+            "episodes": 23000
+        },
+        "Weak Opponent": {
+            "Weak Opponent": {
+                "Reward per Game": 8.629648739717343,
+                "Touch per Game": 1.0,
+                "Won Percentage": 0.96,
+                "Loss Percentage": 0.04,
+                "Draw Percentage": 3.469446951953614e-17
+            },
+            "episodes": 23000
+        },
+        "Best Performing SAC": {
+            "Best Performing SAC": {
+                "Reward per Game": -4.233485249781487,
+                "Touch per Game": 0.53,
+                "Won Percentage": 0.34,
+                "Loss Percentage": 0.65,
+                "Draw Percentage": 0.009999999999999898
+            },
+            "episodes": 23000
+        }
+    },
+    "24000": {
+        "Strong Opponent": {
+            "Strong Opponent": {
+                "Reward per Game": 7.00929181364049,
+                "Touch per Game": 0.96,
+                "Won Percentage": 0.89,
+                "Loss Percentage": 0.09,
+                "Draw Percentage": 0.01999999999999999
+            },
+            "episodes": 24000
+        },
+        "Weak Opponent": {
+            "Weak Opponent": {
+                "Reward per Game": 8.235901862183436,
+                "Touch per Game": 0.99,
+                "Won Percentage": 0.92,
+                "Loss Percentage": 0.04,
+                "Draw Percentage": 0.03999999999999996
+            },
+            "episodes": 24000
+        },
+        "Best Performing SAC": {
+            "Best Performing SAC": {
+                "Reward per Game": -4.33773621904587,
+                "Touch per Game": 0.52,
+                "Won Percentage": 0.34,
+                "Loss Percentage": 0.63,
+                "Draw Percentage": 0.029999999999999916
+            },
+            "episodes": 24000
+        }
+    },
+    "25000": {
+        "Strong Opponent": {
+            "Strong Opponent": {
+                "Reward per Game": 4.5312808005103955,
+                "Touch per Game": 0.88,
+                "Won Percentage": 0.79,
+                "Loss Percentage": 0.13,
+                "Draw Percentage": 0.07999999999999996
+            },
+            "episodes": 25000
+        },
+        "Weak Opponent": {
+            "Weak Opponent": {
+                "Reward per Game": 6.137269146967544,
+                "Touch per Game": 0.95,
+                "Won Percentage": 0.84,
+                "Loss Percentage": 0.1,
+                "Draw Percentage": 0.060000000000000026
+            },
+            "episodes": 25000
+        },
+        "Best Performing SAC": {
+            "Best Performing SAC": {
+                "Reward per Game": -5.473623663281926,
+                "Touch per Game": 0.54,
+                "Won Percentage": 0.28,
+                "Loss Percentage": 0.67,
+                "Draw Percentage": 0.04999999999999993
+            },
+            "episodes": 25000
         }
     }
 }

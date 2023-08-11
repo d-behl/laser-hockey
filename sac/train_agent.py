@@ -59,6 +59,7 @@ parser.add_argument('--phased', help='Phased training', type=str, default=None)
 parser.add_argument('--extra_info', help='Add extra info to observation', action='store_true')
 parser.add_argument('--opposite_side', help='Train agent on opposite side', action='store_true')
 parser.add_argument('--noise', help='Add noise to observation', action='store_true')
+parser.add_argument('--only_self', help='Only train against self', action='store_true')
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -87,17 +88,24 @@ if __name__ == '__main__':
         json.dump(str(args), f, indent=4)
 
     env = h_env.HockeyEnv(mode=mode, verbose=(not args.q))
-    opponents = [
-        h_env.BasicOpponent(weak=True),
-        h_env.BasicOpponent(weak=False)
-    ]
+    if args.only_self:
+        ag = SACAgent.load_model_old(args.preload_path)
+        ag.eval()
+        opponents = [
+            ag
+        ]
+    else:
+        opponents = [
+            h_env.BasicOpponent(weak=True),
+            h_env.BasicOpponent(weak=False)
+        ]
 
     # Add absolute paths for pretrained agents
     pretrained_agents = []
 
     if args.selfplay:
         for p in pretrained_agents:
-            a = SACAgent.load_model(p)
+            a = SACAgent.load_model_old(p)
             a.eval()
             opponents.append(a)
     if args.extra_info:
