@@ -1,3 +1,6 @@
+# The skeleton of the code here is adapted from https://github.com/anticdimi/laser-hockey.git
+# Updates are changed to include phased setting.
+
 import sys
 
 import copy
@@ -321,6 +324,10 @@ class SACAgent():
 
         if total_step % self.args.update_target_every == 0:
             soft_update(self.critic_target, self.critic, self.args.soft_tau)
+        if self.args.phased:
+            self.critic.update_control_gradients()
+            self.actor.update_control_gradients()
+            
 
         return (qf1_loss.item(), qf2_loss.item(), policy_loss.item(), alpha_loss.item())
     

@@ -46,7 +46,7 @@ class RemoteMyOpponent(RemoteControllerInterface):
         return np.asarray(a1)
     
 if __name__ == '__main__':
-    filename = 'sac/models/230808_213414/agents/a-3000.pkl'
+    filename = ''
 
     controller = RemoteMyOpponent(filename)
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     client = Client(username='What the Puck?:', # Testuser
                     password='waeVae4ohd',
                     controller=controller, 
-                    output_path='/home/bozcomlekci/Desktop/ML/RL/laser-hockey/RL2023HockeyTournamentClient/serverside', # rollout buffer with finished games will be saved in here
+                    output_path='laser-hockey/RL2023HockeyTournamentClient/serverside', # rollout buffer with finished games will be saved in here
                     interactive=False,
                     op='start_queuing',
                     num_games=1)

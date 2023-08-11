@@ -1,3 +1,6 @@
+# The skeleton of the code here is adapted from https://github.com/sharma-arjun/phase-ddpg
+# Actor and Critic networks are changed to run in SAC setting.
+
 import math
 import torch
 import numpy as np
@@ -73,7 +76,7 @@ class PMLPActor(nn.Module):
         self.mu = nn.Linear(self.output_size, self.n_actions).to(args.device)
         self.log_sigma = nn.Linear(self.output_size, self.n_actions).to(args.device)
 
-        # to initialize grad of control hidden and h2o ... I need to do this stupid thing ...
+        # to initialize grad of control hidden and h2o
         dummy_x = Variable(torch.zeros(batch_size, input_size), requires_grad=False).type(dtype).to(args.device)
         dummy_y = Variable(torch.zeros(batch_size, output_size), requires_grad=False).type(dtype).to(args.device)
         dummy_criterion = nn.MSELoss()
@@ -214,15 +217,15 @@ class PMLPActor(nn.Module):
             count = 0
             for l in hiddens:
                 for key in l._parameters.keys():
-                    self.self.control_hidden_list[count][kn(phase,0)]._parameters[key].grad.data += l._parameters[key].grad.data * (-0.5*w + w*w - 0.5*w*w*w)
-                    self.self.control_hidden_list[count][kn(phase,1)]._parameters[key].grad.data += l._parameters[key].grad.data * (1 - 2.5*w*w + 1.5*w*w*w)
-                    self.self.control_hidden_list[count][kn(phase,2)]._parameters[key].grad.data += l._parameters[key].grad.data * (0.5*w + 2*w*w - 1.5*w*w*w)
-                    self.self.control_hidden_list[count][kn(phase,3)]._parameters[key].grad.data += l._parameters[key].grad.data * (-0.5*w*w + 0.5*w*w*w)
+                    self.control_hidden_list[count][kn(phase,0)]._parameters[key].grad.data += l._parameters[key].grad.data * (-0.5*w + w*w - 0.5*w*w*w)
+                    self.control_hidden_list[count][kn(phase,1)]._parameters[key].grad.data += l._parameters[key].grad.data * (1 - 2.5*w*w + 1.5*w*w*w)
+                    self.control_hidden_list[count][kn(phase,2)]._parameters[key].grad.data += l._parameters[key].grad.data * (0.5*w + 2*w*w - 1.5*w*w*w)
+                    self.control_hidden_list[count][kn(phase,3)]._parameters[key].grad.data += l._parameters[key].grad.data * (-0.5*w*w + 0.5*w*w*w)
                 count += 1
         for h2o, phase in zip(self.h2o_list, self.phase_list):
             w = spline_w(phase)
             for key in h2o._parameters.keys():
-                self.self.control_h2o_list[kn(phase,0)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (-0.5*w + w*w - 0.5*w*w*w)
-                self.self.control_h2o_list[kn(phase,1)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (1 - 2.5*w*w + 1.5*w*w*w)
-                self.self.control_h2o_list[kn(phase,2)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (0.5*w + 2*w*w - 1.5*w*w*w)
-                self.self.control_h2o_list[kn(phase,3)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (-0.5*w*w + 0.5*w*w*w)
+                self.control_h2o_list[kn(phase,0)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (-0.5*w + w*w - 0.5*w*w*w)
+                self.control_h2o_list[kn(phase,1)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (1 - 2.5*w*w + 1.5*w*w*w)
+                self.control_h2o_list[kn(phase,2)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (0.5*w + 2*w*w - 1.5*w*w*w)
+                self.control_h2o_list[kn(phase,3)]._parameters[key].grad.data += h2o._parameters[key].grad.data * (-0.5*w*w + 0.5*w*w*w)

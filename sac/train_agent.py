@@ -1,3 +1,6 @@
+# The skeleton of the code here is adapted from https://github.com/anticdimi/laser-hockey.git
+# Modifications made to include other settings and strategies such as phased training
+
 import os
 import torch
 from laserhockey import hockey_env as h_env

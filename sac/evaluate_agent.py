@@ -1,3 +1,5 @@
+# Run this file to evaluate a single agent in multiple games and visualize the games
+
 from argparse import ArgumentParser
 from laserhockey import hockey_env as h_env
 from sac_agent import SACAgent
@@ -36,18 +38,6 @@ if __name__ == '__main__':
         raise ValueError('Parameter --filename must be present. See --help.')
 
     env = h_env.HockeyEnv(mode=mode)
-    # obs_dim = env.observation_space.shape
-    # logger = Logger(prefix_path=os.path.join(abs_path, dirname),
-    #             mode=args.mode,
-    #             cleanup=True,
-    #             quiet=args.q)
-    # agent = SACAgent(
-    #     logger=logger,
-    #     obs_dim=obs_dim,
-    #     action_space=env.action_space,
-    #     action_dim=env.num_actions,
-    #     args=args
-    # )
     agent = SACAgent.load_model_old(opts.filename)
     agent.args.max_steps = opts.max_steps
     agent.args.q = opts.q
@@ -55,6 +45,9 @@ if __name__ == '__main__':
     agent.args.mode = opts.mode
     agent.eval()
     agent.args.show = opts.show
-    opponent = h_env.BasicOpponent(weak=opts.weak)
+    opponents = []
+    opponent_name = 'sac/old_models/230808_142054/agents/a-18000.pkl'
+    #opponent = h_env.BasicOpponent(weak=opts.weak)
+    opponent = SACAgent.load_model_old(opponent_name) # 
     stats = evaluate(agent, env, opponent, opts.eval_episodes)
     print(stats)

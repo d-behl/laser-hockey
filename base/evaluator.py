@@ -66,9 +66,10 @@ def evaluate(agent, env, opponent, eval_episodes, quiet=False, action_mapping=No
     # Toggle the verbose flag onto the old value
     env.verbose = old_verbose
 
-    return (
-        np.mean(rew_stats),
-        np.mean(list(touch_stats.values())),
-        np.mean(list(won_stats.values())),
-        np.mean(list(lost_stats.values()))
-    )
+    return {
+        'Reward per Game': np.mean(rew_stats).item(),
+        'Touch per Game': np.mean(list(touch_stats.values())).item(),
+        'Won Percentage': np.mean(list(won_stats.values())).item(),
+        'Loss Percentage': np.mean(list(lost_stats.values())).item(),
+        'Draw Percentage': 1 - np.mean(list(won_stats.values())).item() - np.mean(list(lost_stats.values())).item()
+    }

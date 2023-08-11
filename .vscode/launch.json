@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "train",
+            "name": "sac_train",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -42,7 +42,7 @@
             ],
         },
         {
-            "name": "train_phased",
+            "name": "sac_train_phased",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -57,13 +57,13 @@
                 "--max_steps", "100000",
                 "--eval_episodes", "30",
                 "--evaluate_every", "1000",
-                "--learning_rate", "5e-2",
+                "--learning_rate", "1e-3",
                 "--lr_factor", "0.5",
                 "--lr_milestones", "5000",
                 "--alpha_milestones", "5000",
                 "--update_target_every", "1",
-                "--gamma", "0.95",
-                "--batch_size", "128",
+                "--gamma", "0.99",
+                "--batch_size", "1024",
                 "--grad_steps", "32",
                 //"--per",
                 //"--selfplay", "True",
@@ -79,7 +79,7 @@
             ],
         },
         {
-            "name": "test",
+            "name": "sac_test",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -88,9 +88,9 @@
             "args": [
                 "--max_steps", "5000",
                 "--eval_episodes", "100",
-                "--filename", "sac/models/above/agents/a-16000.pkl",
+                "--filename", "sac/models/230810_152421/agents/a-20000.pkl",
                 "--mode", "normal",
-                //"--weak",
+                "--weak",
                 //"--opposite",
                 "--show",
             ],
@@ -108,14 +108,15 @@
         },
 
         {
-            "name": "server_files",
+            "name": "sac_compile_evaluation",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
-            "program": "laserenv.py",
+            "program": "sac/compile_evaluation.py",
             "args": [
-                
+                "--agents_folder", "sac/models/230810_152421",
+                "--opponent_path", "sac/old_models/230808_142054/agents/a-18000.pkl",
             ],
         },
       

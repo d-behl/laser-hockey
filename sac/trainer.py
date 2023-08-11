@@ -1,3 +1,6 @@
+# The skeleton of the code here is adapted from https://github.com/anticdimi/laser-hockey.git
+# Modifications made to include other settings and strategies such as phased training
+
 import numpy as np
 import time
 
@@ -9,7 +12,7 @@ from laserhockey import hockey_env as h_env
 
 from torch.utils.tensorboard import SummaryWriter
 
-#from pink import PinkNoiseDist
+#from pink import PinkNoiseDist # Not functional due to library errors
 
 class SACTrainer:
     """
@@ -81,17 +84,18 @@ class SACTrainer:
             won_stats[episode_counter] = 0
             lost_stats[episode_counter] = 0
             first_time_touch = 1
+            ob, info1 = env.reset()
+            obs_agent2 = env.obs_agent_two()
+            info2 = env.get_info_agent_two()
+            phase = calculate_phase(obs=ob, env=env, info=info1, player=1)
+            phase2 = calculate_phase(obs=obs_agent2, env=env, info=info2, player=2)
+            opponent = poll_opponent(opponents)
             if self.args.opposite_side:
                 is_opposite = np.random.choice([True, False], p=[0.5, 0.5])
             if self.args.opposite_side and is_opposite:
-                ob, info1 = env.reset()
-                obs_agent2 = env.obs_agent_two()
-                info2 = env.get_info_agent_two()
-                phase = calculate_phase(obs=obs_agent2, env=env, info=info2, player=2)
-                opponent = poll_opponent(opponents)
                 for step in range(self.args.max_steps):
                     if self.args.phased:
-                        a2 = agent.act(obs_agent2, phase=phase)
+                        a2 = agent.act(obs_agent2, phase=phase2)
                     else:
                         a2 = agent.act(obs_agent2)
                     # if self.args.noise: 
@@ -111,13 +115,13 @@ class SACTrainer:
                     reward = env.get_reward_agent_two(info2)
                     next_state2 = env.obs_agent_two()
                     if self.args.phased:
-                        next_phase = calculate_phase(obs=next_state2, env=env, info=info2, player=2)
+                        next_phase2 = calculate_phase(obs=next_state2, env=env, info=info2, player=2)
                     
                     touched = max(touched, info2['reward_touch_puck'])
                     step_reward = (
                         reward
-                        + info2['reward_puck_direction']
-                        + info2['reward_closeness_to_puck']
+                        #+ info2['reward_puck_direction']
+                        #+ info2['reward_closeness_to_puck']
                         - (1 - touched) * 0.1
                         + touched * first_time_touch * 0.1
                     )
@@ -143,15 +147,9 @@ class SACTrainer:
                     
                     ob = next_state
                     obs_agent2 = next_state2
-                    phase = next_phase
+                    phase2 = next_phase2
                     total_step_counter += 1 
             else:
-                ob, info1 = env.reset()
-                obs_agent2 = env.obs_agent_two()
-                assert ob[12] == -obs_agent2[12]
-
-                opponent = poll_opponent(opponents)
-                phase = calculate_phase(obs=ob, env=env, info=info1, player=1)
                 for step in range(self.args.max_steps):
                     self.writer.add_scalar('phase', phase, total_step_counter)
                     if self.args.phased:
@@ -168,7 +166,6 @@ class SACTrainer:
                     else:
                         a2 = opponent.act(obs_agent2)
 
-
                     actions = np.hstack([a1, a2])
                     next_state, reward, d, t, info1 = env.step(actions)
                     if self.args.phased:
@@ -179,8 +176,8 @@ class SACTrainer:
 
                     step_reward = (
                         reward
-                        + info1['reward_puck_direction']
-                        + 5 * info1['reward_closeness_to_puck']
+                        #+ info1['reward_puck_direction']
+                        #+ info1['reward_closeness_to_puck']
                         - (1 - touched) * 0.1
                         + touched * first_time_touch * 0.1
                     )
@@ -202,7 +199,6 @@ class SACTrainer:
                         won_stats[episode_counter] = 1 if env.winner == 1 else 0
                         lost_stats[episode_counter] = 1 if env.winner == -1 else 0
                         break
-
 
                     ob = next_state
                     obs_agent2 = env.obs_agent_two()

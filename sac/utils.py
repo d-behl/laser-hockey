@@ -1,3 +1,5 @@
+# Several utilities for the SAC algorithm and the environment such as saving and loading models, calculating the phase, etc.
+
 import math
 import torch
 import numpy as np
